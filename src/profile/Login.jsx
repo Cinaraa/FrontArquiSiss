@@ -28,7 +28,8 @@ const Login = () => {
 
             </div>
             <div className='submit-container'>
-                <div className='submit'>Sign Up</div>
+                <a className='submit' href='/signup'>Don't have an account? Sign Up</a>
+                <a className='submit' href='/'>Go home</a>
                 <div className='submit'>Log in</div>
             </div>
         </div>

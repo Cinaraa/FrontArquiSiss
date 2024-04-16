@@ -11,6 +11,7 @@ function App() {
       <a href='/board'>Ir a Jugar</a>
       <a href='/signup'>Ir a Signup</a>
       <a href='/login'>Ir a Login</a>
+      <a href='/listingflights'>Ir a Listingflights</a>
     </div>
   )
 }

@@ -33,8 +33,9 @@ const Signup = () => {
 
             </div>
             <div className='submit-container'>
+                <a className='submit' href='/login'>Already have an account? Log in</a>
                 <div className='submit'>Sign Up</div>
-                <div className='submit'>Log in</div>
+
 
             </div>
         </div>

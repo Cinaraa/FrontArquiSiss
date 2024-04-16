@@ -5,6 +5,7 @@ import Board from '../game/Board'
 import UserWelcome from '../profile/UserWelcome'
 import Signup from '../profile/Signup'
 import Login from '../profile/Login'
+import Listingflights from '../flights/Listingflights'
 
 
 function Routing(){
@@ -17,6 +18,7 @@ function Routing(){
         <Route path={"/board"} element={<Board />}/>
         <Route path={"/signup"} element={<Signup />}/>
         <Route path={"/login"} element={<Login />}/>
+        <Route path={"/listingflights"} element={<Listingflights />}/>
       </Routes>
     </BrowserRouter>
   )
