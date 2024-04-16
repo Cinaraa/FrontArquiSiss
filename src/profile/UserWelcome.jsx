@@ -1,19 +1,16 @@
-import {useState} from 'react'
-
+import { useState } from "react"
 export default function UserWelcome() {
-    const [nombre, setNombre] = useState(null)
-
+    const [nombre, setNombre] = useState(null);
     function handleChange(nombre) {
-        setNombre(nombre)
+        setNombre(nombre);
     }
-
     return (
         <>
-        <h1>Welcome to the User Welcome Page</h1>
-        <input 
+        <h2>Mi primer componente!</h2>
+        <input
             onChange={e => handleChange(e.target.value)}
-            />
-        <p>{nombre}</p>
+        />
+        <p>Bienveni@, { nombre }!</p>
         </>
     )
 }
