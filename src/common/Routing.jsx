@@ -6,6 +6,7 @@ import UserWelcome from '../profile/UserWelcome'
 import Signup from '../profile/Signup'
 import Login from '../profile/Login'
 import Listingflights from '../flights/Listingflights'
+import FlightDetails from '../flights/Flightdetail'
 
 
 function Routing(){
@@ -19,6 +20,7 @@ function Routing(){
         <Route path={"/signup"} element={<Signup />}/>
         <Route path={"/login"} element={<Login />}/>
         <Route path={"/listingflights"} element={<Listingflights />}/>
+        <Route path={"/flight/:id"} element={<FlightDetails />}/>
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,40 @@
+.flightcard {
+    margin-bottom: 20px;
+  }
+  
+  .flight-card-container {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .flight-card {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .flight-card-info {
+    flex-grow: 1;
+  }
+  
+  .flight-card-info-header,
+  .flight-card-info-footer {
+    display: flex;
+  }
+  
+  .flight-card-info-header-departure,
+  .flight-card-info-header-arrival {
+    flex-grow: 1;
+  }
+  
+  .flight-card-info-footer-duration,
+  .flight-card-info-footer-airplane {
+    flex-grow: 1;
+  }
+  
+  .flight-card-image img {
+    max-width: 100px;
+    max-height: 100px;
+  }
+  
