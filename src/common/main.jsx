@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
-import UserWelcome from '../profile/UserWelcome.jsx'
 import Routing from './Routing.jsx'
 import { Auth0Provider } from '@auth0/auth0-react'
 

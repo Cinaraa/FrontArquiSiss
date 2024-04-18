@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './../assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import LoginButton from '../profile/LoginButton'
 import LogoutButton from '../profile/LogoutButton'
@@ -14,12 +11,13 @@ function App() {
 
   return (
     <div className="App">
+
       {isAuthenticated && (
       <div>
       <LogoutButton />
-      <a href='/welcome'> Welcome</a>
-      <a href='/listingflights'> Flights</a>
-        </div>
+      <a href='/perfil'> Mi perfil</a>
+      <a href='/listingflights'> Flights</a> 
+      </div>
       
       )}
       {!isAuthenticated && (
