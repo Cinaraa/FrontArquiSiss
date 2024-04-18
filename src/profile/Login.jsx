@@ -1,39 +1,36 @@
 import React from 'react';
-import { useState } from 'react'
+import axios from 'axios';
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 import email_icon from '../assets/email_icon.png';
 import password_icon from '../assets/password_icon.png';
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/user/login', { email, password });
+            console.log(response.data);
+            navigate('/home');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
-        <div className='container'>
-            <div className='header'>
-                <div className='text'>Log In</div>
-                <div className='underline'></div>
-    
-            </div>
-            <div className='inputs'>
-
-                <div className='input'>
-                    <img src={email_icon} alt='email icon'/>
-                    <input type='email' placeholder='Email ID'/>
-                </div>
-
-                <div className='input'>
-                    <img src={password_icon} alt='password icon'/>
-                    <input type='password' placeholder='Password'/>
-                </div>
-
-            </div>
-            <div className='submit-container'>
-                <a className='submit' href='/signup'>Don't have an account? Sign Up</a>
-                <a className='submit' href='/'>Go home</a>
-                <div className='submit'>Log in</div>
-            </div>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input type='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+            <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+            <button type='submit'>Log in</button>
+        </form>
     );
 };
+
 
 export default Login;
