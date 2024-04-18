@@ -1,5 +1,7 @@
 import React from 'react';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 
 import user_icon from '../assets/user_icon.png';
@@ -7,39 +9,31 @@ import email_icon from '../assets/email_icon.png';
 import password_icon from '../assets/password_icon.png';
 
 const Signup = () => {
+    const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/user/new', { name, email, password });
+            console.log(response.data);
+            navigate('/login');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
-        <div className='container'>
-            <div className='header'>
-                <div className='text'>Sign Up</div>
-                <div className='underline'></div>
-    
-            </div>
-            <div className='inputs'>
-                <div className='input'>
-                    <img src={user_icon} alt='user icon'/>
-                    <input type='text' placeholder='Name'/>
-                </div>
-
-                <div className='input'>
-                    <img src={email_icon} alt='email icon'/>
-                    <input type='email' placeholder='Email ID'/>
-                </div>
-
-                <div className='input'>
-                    <img src={password_icon} alt='password icon'/>
-                    <input type='password' placeholder='Password'/>
-                </div>
-
-            </div>
-            <div className='submit-container'>
-                <a className='submit' href='/login'>Already have an account? Log in</a>
-                <div className='submit'>Sign Up</div>
-
-
-            </div>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input type='text' placeholder='Name' value={name} onChange={e => setName(e.target.value)} />
+            <input type='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+            <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+            <button type='submit'>Sign Up</button>
+        </form>
     );
 };
+
 
 export default Signup;
