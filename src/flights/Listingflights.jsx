@@ -8,25 +8,27 @@ export default function Listingflights() {
 
     useEffect(() => {
         const fetchFlights = async () => {
-            try {
-                const response = await axios.get('/flights');
-                setFlightCards(response.data);
-            } catch (error) {
-                console.error(error);
-            }
+          try {
+            const response = await axios.get('http://localhost:3000/flights');
+            console.log(response.data.flights);
+            setFlightCards(response.data.flights); // Acceder a la clave 'flights'
+            
+          } catch (error) {
+            console.error(error);
+          }
         };
-
+      
         fetchFlights();
-    }, []);
-
-    return (
+      }, []);
+      
+      return (
         <div className="list">
             <div className="list-flight">
-                {flightCards.map(flightCard => (
-                    <Flightcard key={flightCard.id} flightCard={flightCard} />
+                {Array.isArray(flightCards) && flightCards.map(flightCard => (
+                    <Flightcard key={flightCard.id} flightCard={flightCard} /> // Pasar flightCard como prop
                 ))}
             </div>
             <a className='submit' href='/'>Go home</a>
         </div>
-    );
+      );
 };
