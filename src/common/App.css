@@ -1,0 +1,94 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.flights-button {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  max-width: 400px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 25px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+  bottom: 30%;
+}
+
+.flights-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Styles for the login button */
+.login-button {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vw;
+  max-width: 300px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 20px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  bottom: 20%;
+}
+
+.logout-button-for-landing{
+  margin: 0 5px;
+  text-decoration: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Styles for parallel buttons */
+.parallel-buttons {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+}
+
+.log-out-button,
+.profile-button {
+  margin: 0 5px;
+  text-decoration: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.log-out-button:hover,
+.profile-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}

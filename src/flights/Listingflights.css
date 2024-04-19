@@ -1,0 +1,26 @@
+.list {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+  
+  }
+  
+  .list-flight {
+  width: 100%; /* Set the width to 100% */
+  max-width: 1000px; /* Increase the maximum width */
+}
+
+
+  .submit {
+    margin-top: 20px; /* Add some space between the flight cards and the "Go home" link */
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .submit:hover {
+    text-decoration: underline;
+  }
+  
+  
