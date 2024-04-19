@@ -10,32 +10,38 @@ import { Link } from 'react-router-dom';
 export default function FlightDetails() {
   const { id: flightid } = useParams(); 
   const [flight, setFlight] = useState(null);
-  const { isAuthenticated, user } = useAuth0();
-  const userId = user.sub;
-  console.log('userId:', userId);
+  const [quantity, setQuantity] = useState(1);
+  const { isLoading, isAuthenticated, user } = useAuth0();
 
 
   useEffect(() => {
-    const fetchFlightDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/flights/${flightid}`);
-        setFlight(response.data);
-      } catch (error) {
-        console.error('Error fetching flight details:', error);
-      }
-    };
+    if (isAuthenticated) {
+      const fetchFlightDetails = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3000/flights/${flightid}`);
+          setFlight(response.data);
+        } catch (error) {
+          console.error('Error fetching flight details:', error);
+        }
+      };
 
-    fetchFlightDetails();
+      fetchFlightDetails();
+    }
   }, [flightid]);
 
-  const handleBuyNow = async () => {
-    try {
-      const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`);
-      console.log('Purchase successful:', response.data);
-      // Aquí puedes manejar la respuesta del backend después de realizar la compra
-    } catch (error) {
-      console.error('Error purchasing flight:', error);
-    }
+  
+    const handleBuyNow = async () => {
+      try {
+        if (!isLoading && !isAuthenticated) {
+        const userId = user.sub;
+        const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`, {
+          quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
+        });
+        console.log('Purchase successful:', response.data);
+        }
+      } catch (error) {
+        console.error('Error purchasing flight:', error);
+      }
   };
 
   if (!flight) {
@@ -45,7 +51,6 @@ export default function FlightDetails() {
   return (
     <div className="flight-details">
       <h2>Flight Details</h2>
-      <p>Flight ID: {flight.id}</p>
       <p>Airline: {flight.airline}</p>
       <p>Departure Airport: {flight.departure_airport_name}</p>
       <p>Departure Time: {flight.departure_airport_time}</p>
@@ -56,6 +61,14 @@ export default function FlightDetails() {
       <p>Price: {flight.price} {flight.currency}</p>
       <p>Pasajes disponibles {flight.quantity}</p>
       <img src={flight.airline_logo} alt="airline logo" />
+
+      <label htmlFor="quantity">Cantidad de Pasajes:</label>
+      <select id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
+        {/* Opciones para la cantidad de pasajes */}
+        {Array.from({length: flight.quantity}, (_, i) => i + 1).map(num => (
+          <option key={num} value={num}>{num}</option>
+        ))}
+      </select>
 
       {isAuthenticated && (
         <button onClick={handleBuyNow}>Buy Now</button>

@@ -26,7 +26,7 @@ const NavBar = ({ isLoggedIn, logout }) => {
                 <Link to="/perfil">Mi perfil</Link>
               </li>
               <li>
-                <LogoutButton logout={logout} />
+                {/* <LogoutButton logout={logout} /> */}
               </li>
             </>
           )}

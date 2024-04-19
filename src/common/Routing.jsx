@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App'
-import Instructions from '../game/Instructions'
-import Board from '../game/Board'
 import Signup from '../profile/Signup'
 import Login from '../profile/Login'
 import Listingflights from '../flights/Listingflights'
@@ -21,9 +19,7 @@ function Routing() {
       <NavBar isLoggedIn={isAuthenticated} logout={logout} />
       <Routes>
         <Route path={"/"} element={<App />}/>
-        <Route path={"/instructions"} element={<Instructions />}/>
         <Route path={"/perfil"} element={<Profileinfo />}/>
-        <Route path={"/board"} element={<Board />}/>
         <Route path={"/signup"} element={<Signup />}/>
         <Route path={"/login"} element={<Login />}/>
         <Route path={"/listingflights"} element={<Listingflights />}/>

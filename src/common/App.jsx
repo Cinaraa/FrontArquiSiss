@@ -13,19 +13,19 @@ function App() {
 
 
   return (
-
-
     <div className="App">
       <img className="background-image"src={avioncita} alt="avioncita" width="100" height="100"/>
       {isAuthenticated && (
       <div className='parallel-buttons'>
-
-      <LogoutButton className="log-out-button"/>
-      <a className='profile-button' href='/perfil'> Mi perfil</a>
+          <LogoutButton className="log-out-button"/>
+        <a className='profile-button' href='/perfil'> Mi perfil</a>
       </div>
-
-    <div className="App">
-      <NavBar isLoggedIn={isAuthenticated} logout={logout}/>
+      )}
+      {!isAuthenticated && (
+        <LoginButton className="login-button"/>
+      )}
+      <a href='/listingflights' className="flights-button"> Flights</a>
+      {/* <NavBar isLoggedIn={isAuthenticated} logout={logout}/> */}
 
       {/* {isAuthenticated && (
       <div>
@@ -49,4 +49,4 @@ function App() {
     </div>
   )
 }
-export default App
+export default App;

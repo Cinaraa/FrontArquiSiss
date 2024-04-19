@@ -19,17 +19,17 @@ export default function Flightcard({ flightCard }) { // Cambia flightcard a flig
           <div className='center-left-side-card'>
             <p>{flightCard.departure_airport_id}</p>
             {/* <p>{flightCard.departure_airport_time}</p> */}
-            <p>departure day: {departure_day}</p>
-            <p>departure time: {departure_time}</p>
+            <p>Departure day: {departure_day}</p>
+            <p>Departure time: {departure_time}</p>
           </div>
           <div className='center-right-side-card'>
-            <p>Flight druation: {flightCard.duration} mins</p>
+            <p>Flight duration: {flightCard.duration} mins</p>
           </div>
           <div className='right-side-card'>
             <p>{flightCard.arrival_airport_id}</p>
             {/* <p>{flightCard.arrival_airport_time}</p> */}
-            <p>arrival day: {arrival_day}</p>
-            <p>arrival time: {arrival_time}</p>
+            <p>Arrival day: {arrival_day}</p>
+            <p>Arrival time: {arrival_time}</p>
           </div>
         </div>
         <div className='bottom-part-card'>
