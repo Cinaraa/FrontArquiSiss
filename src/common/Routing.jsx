@@ -21,7 +21,7 @@ function Routing(){
         <Route path={"/login"} element={<Login />}/>
         <Route path={"/listingflights"} element={<Listingflights />}/>
         <Route path={"/flight/:id"} element={<FlightDetails />}/>
-        <Route path={"/historial/:id"} element={<HistorialCompra/>} />
+        <Route path={"/historial"} element={<HistorialCompra/>} />
       </Routes>
     </BrowserRouter>
   )

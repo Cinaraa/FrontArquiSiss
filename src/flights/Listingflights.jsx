@@ -33,7 +33,7 @@ export default function Listingflights() {
                     ))}
                 </div>
                 <a className='submit' href='/'>Go home</a>
-                <a className='submit' href='/historial/:id'>Ver historial de compra</a>
+                <a className='submit' href='/historial'>Ver historial de compra</a>
             </div>
           )}
           {!isAuthenticated && (

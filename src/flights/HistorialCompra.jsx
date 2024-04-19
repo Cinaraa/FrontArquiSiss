@@ -6,24 +6,25 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
-    const { isAuthenticated, user } = useAuth0();
-    const userId = user.sub;
-    console.log('userId:', userId);
-
+    const { isLoading, isAuthenticated, user } = useAuth0();
     useEffect(() => {
-        const fetchFlights = async () => {
-          try {
-            const response = await axios.post(`http://localhost:3000/historial/${userId}`);
-            console.log(response.data);
-            setFlightCards(response.data);
-            
-          } catch (error) {
-            console.error(error);
-          }
-        };
-      
-        fetchFlights();
-      }, []);
+        if (!isLoading && isAuthenticated) {
+            const userId = user.sub;
+            console.log('userId:', userId);
+
+            const fetchFlights = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3000/flights/historial/${userId}`);
+                    console.log(response.data);
+                    setFlightCards(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
+            fetchFlights();
+        }
+    }, [isLoading, isAuthenticated, user]);
       return (
         <div>
           {isAuthenticated && (
