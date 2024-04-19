@@ -32,12 +32,13 @@ export default function FlightDetails() {
   
     const handleBuyNow = async () => {
       try {
-        if (!isLoading && !isAuthenticated) {
-        const userId = user.sub;
-        const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`, {
-          quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
-        });
-        console.log('Purchase successful:', response.data);
+        if (!isLoading && isAuthenticated) {
+          const userId = user.sub;
+          console.log('userId:', userId);
+          const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`, {
+            quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
+          });
+          console.log('Purchase successful:', response.data);
         }
       } catch (error) {
         console.error('Error purchasing flight:', error);
@@ -59,7 +60,7 @@ export default function FlightDetails() {
       <p>Duration: {flight.duration} min</p>
       <p>Carbon Emissions: {flight.carbon_emissions} kg</p>
       <p>Price: {flight.price} {flight.currency}</p>
-      <p>Pasajes disponibles {flight.quantity}</p>
+      <p>Pasajes disponibles: {flight.quantity}</p>
       <img src={flight.airline_logo} alt="airline logo" />
 
       <label htmlFor="quantity">Cantidad de Pasajes:</label>

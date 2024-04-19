@@ -3,8 +3,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 const Profileinfo = ()=> {
-    const {user, isAuthenticated} = useAuth0();
+    const {user, isLoading , isAuthenticated} = useAuth0();
     console.log(isAuthenticated);
+    if (!isLoading) {
+        const userId = user.sub;
+        console.log('userId:', userId);
+    }
     
     
     return (
