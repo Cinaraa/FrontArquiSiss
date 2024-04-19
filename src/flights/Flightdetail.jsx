@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function FlightDetails() {
   const { id: flightid } = useParams(); 
   const [flight, setFlight] = useState(null);
+  const { isAuthenticated, user } = useAuth0();
+  const userId = user.sub;
+  console.log('userId:', userId);
 
   useEffect(() => {
     const fetchFlightDetails = async () => {
@@ -21,7 +25,7 @@ export default function FlightDetails() {
 
   const handleBuyNow = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/flights/${flightid}/buy`);
+      const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`);
       console.log('Purchase successful:', response.data);
       // Aquí puedes manejar la respuesta del backend después de realizar la compra
     } catch (error) {
