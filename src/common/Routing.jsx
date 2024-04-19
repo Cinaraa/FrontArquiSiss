@@ -7,7 +7,7 @@ import Login from '../profile/Login'
 import Listingflights from '../flights/Listingflights'
 import FlightDetails from '../flights/Flightdetail'
 import Profileinfo from '../profile/Profileinfo'
-
+import HistorialCompra from '../flights/HistorialCompra'
 
 function Routing(){
     return (
@@ -21,6 +21,7 @@ function Routing(){
         <Route path={"/login"} element={<Login />}/>
         <Route path={"/listingflights"} element={<Listingflights />}/>
         <Route path={"/flight/:id"} element={<FlightDetails />}/>
+        <Route path={"/historial"} element={<HistorialCompra/>} />
       </Routes>
     </BrowserRouter>
   )
