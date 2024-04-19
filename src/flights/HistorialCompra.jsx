@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Flightcard from './Flightcard';
+import Flightcard from './FlightCardHistory';
 import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
-    const { isAuthenticated } = useAuth0();
-    
-
+    const { isLoading, isAuthenticated, user } = useAuth0();
     useEffect(() => {
-        const fetchFlights = async () => {
-          try {
-            const response = await axios.get('http://localhost:3000/flights');
-            console.log(response.data.flights);
-            setFlightCards(response.data.flights); // Acceder a la clave 'flights'
-            
-          } catch (error) {
-            console.error(error);
-          }
-        };
-      
-        fetchFlights();
-      }, []);
+        if (!isLoading && isAuthenticated) {
+            const userId = user.sub;
+            console.log('userId:', userId);
+
+            const fetchFlights = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3000/flights/historial/${userId}`);
+                    console.log(response.data);
+                    setFlightCards(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
+            fetchFlights();
+        }
+    }, [isLoading, isAuthenticated, user]);
       return (
         <div>
           {isAuthenticated && (
@@ -33,12 +35,11 @@ export default function Listingflights() {
                     ))}
                 </div>
                 <a className='submit' href='/'>Go home</a>
-                <a className='submit' href='/historial'>Ver historial de compra</a>
             </div>
           )}
           {!isAuthenticated && (
             <div className="list">
-                <h1>Log in to see the flights</h1>
+                <h1>Log in to see your flight history</h1>
                 <a className='submit' href='/'>Go home</a>
             </div>
           )}
