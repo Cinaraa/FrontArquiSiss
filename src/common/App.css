@@ -5,43 +5,34 @@
   text-align: center;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 .background-image {
-  position: fixed; /* Fija la imagen en la ventana del navegador */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Establece el ancho al 100% */
-  height: 100%; /* Establece la altura al 100% */
-  z-index: -1; /* Coloca la imagen detrás del contenido */
-  /* Otros estilos que desees aplicar */
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .flights-button {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: 70vw; /* Set the width to cover 60% of the viewport width */
-  max-width: 400px; /* Optional: set a maximum width to the button */
+  width: 70vw;
+  max-width: 400px;
   padding: 15px;
   text-align: center;
   text-decoration: none;
-  background-color: rgba(0, 0, 0, 0.5); /* Semitransparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  border-radius: 25px; /* Rounded edges */
+  border-radius: 25px;
   font-size: 1.2em;
-  transition: background-color 0.3s ease; /* Smooth transition on hover */
-  bottom: 30%; /* Set the button 20px from the bottom of the viewport */
+  transition: background-color 0.3s ease;
+  bottom: 30%;
 }
 
 .flights-button:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 /* Styles for the login button */
@@ -63,5 +54,31 @@
 }
 
 .login-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Styles for parallel buttons */
+.parallel-buttons {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+}
+
+.log-out-button,
+.profile-button {
+  margin: 0 5px;
+  text-decoration: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.log-out-button:hover,
+.profile-button:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
