@@ -7,11 +7,18 @@ import Login from '../profile/Login'
 import Listingflights from '../flights/Listingflights'
 import FlightDetails from '../flights/Flightdetail'
 import Profileinfo from '../profile/Profileinfo'
+import { useAuth0 } from '@auth0/auth0-react';
+import NavBar from '../navbar/NavBar';
 import HistorialCompra from '../flights/HistorialCompra'
 
-function Routing(){
-    return (
+
+
+function Routing() {
+  const { isAuthenticated, logout } = useAuth0();
+
+  return (
     <BrowserRouter>
+      <NavBar isLoggedIn={isAuthenticated} logout={logout} />
       <Routes>
         <Route path={"/"} element={<App />}/>
         <Route path={"/instructions"} element={<Instructions />}/>
@@ -24,7 +31,7 @@ function Routing(){
         <Route path={"/historial"} element={<HistorialCompra/>} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default Routing;
