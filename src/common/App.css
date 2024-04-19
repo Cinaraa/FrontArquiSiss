@@ -4,39 +4,81 @@
   padding: 2rem;
   text-align: center;
 }
-/* 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.flights-button {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  max-width: 400px;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 25px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+  bottom: 30%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-} */
-
-.card {
-  padding: 2em;
+.flights-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.read-the-docs {
-  color: #888;
+/* Styles for the login button */
+.login-button {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vw;
+  max-width: 300px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 20px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  bottom: 20%;
+}
+
+.login-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Styles for parallel buttons */
+.parallel-buttons {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+}
+
+.log-out-button,
+.profile-button {
+  margin: 0 5px;
+  text-decoration: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.log-out-button:hover,
+.profile-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }

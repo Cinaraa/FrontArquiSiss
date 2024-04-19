@@ -5,7 +5,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 const LogoutButton = () => {
     const { logout } = useAuth0();
     return (
-        <Link to="/" onClick={() => logout()}>Log out</Link>
+
+//         <button className="login-button" onClick={() => logout()}>Log out</button>
+
+        <Link className="login-button" to="/" onClick={() => logout()}>Log out</Link>
+
     );
 }
 

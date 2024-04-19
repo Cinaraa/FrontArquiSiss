@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import './Flightdetail.css';
+import LoginButton from '../profile/LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
+
 
 export default function FlightDetails() {
   const { id: flightid } = useParams(); 
@@ -9,6 +13,7 @@ export default function FlightDetails() {
   const { isAuthenticated, user } = useAuth0();
   const userId = user.sub;
   console.log('userId:', userId);
+
 
   useEffect(() => {
     const fetchFlightDetails = async () => {
@@ -49,8 +54,17 @@ export default function FlightDetails() {
       <p>Duration: {flight.duration} min</p>
       <p>Carbon Emissions: {flight.carbon_emissions} kg</p>
       <p>Price: {flight.price} {flight.currency}</p>
+      <p>Pasajes disponibles {flight.quantity}</p>
       <img src={flight.airline_logo} alt="airline logo" />
-      <button onClick={handleBuyNow}>Buy Now</button>
+
+      {isAuthenticated && (
+        <button onClick={handleBuyNow}>Buy Now</button>
+      )}
+      {!isAuthenticated && (
+        <LoginButton className="login-button" />
+      )}
+      <Link to={`/Listingflights`}>Volver a vuelos</Link>
+
     </div>
   );
 }
