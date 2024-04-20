@@ -1,46 +1,48 @@
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background-color: #9994fa;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-left ul,
-  .navbar-right ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-left ul li,
-  .navbar-right ul li {
-    display: inline-block;
-    margin-right: 20px;
-  }
-  
-  .navbar-left ul li:last-child,
-  .navbar-right ul li:last-child {
-    margin-right: 0;
-  }
-  
-  .navbar-left ul li a,
-  .navbar-right ul li a {
-    font-size: 18px;
-    padding: 10px 15px;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-family: "Georgia", sans-serif;
-  }
-  
-  .navbar-left ul li a:hover,
-  .navbar-right ul li a:hover {
-    color: lightgray;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10%;
+  background-color: #9994fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Asegura que la barra de navegación esté por encima de otros elementos */
+}
+
+.navbar-left ul,
+.navbar-right ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-left ul li,
+.navbar-right ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar-left ul li:last-child,
+.navbar-right ul li:last-child {
+  margin-right: 0;
+}
+
+.navbar-left ul li a,
+.navbar-right ul li a {
+  font-size: 18px;
+  padding: 10px 15px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-family: "Georgia", sans-serif;
+}
+
+.navbar-left ul li a:hover,
+.navbar-right ul li a:hover {
+  color: lightgray;
+}
+
   
   
   

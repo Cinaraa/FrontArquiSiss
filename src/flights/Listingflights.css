@@ -1,26 +1,34 @@
 .list {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px;
-  
-  }
-  
-  .list-flight {
-  width: 100%; /* Set the width to 100% */
-  max-width: 1000px; /* Increase the maximum width */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  position: relative; /* Añadimos posicionamiento relativo para poder utilizar z-index */
+  margin-top: 10%; /* Ajustamos el margen superior para mover el contenido hacia abajo */
 }
 
+.list-flight {
+  width: 100%; /* Ajustamos el ancho al 100% */
+  max-width: 1000px; /* Aumentamos el ancho máximo */
+}
 
-  .submit {
-    margin-top: 20px; /* Add some space between the flight cards and the "Go home" link */
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-  }
+/* Estilos para el filtro de vuelos */
+.list-filters {
+  position: absolute; /* Posicionamiento absoluto para que el filtro pueda estar sobre las tarjetas de vuelo */
+  top: 15%; /* Ajustamos la posición vertical del filtro */
+  z-index: 1; /* Aseguramos que esté por encima de las tarjetas de vuelo */
+}
 
-  .submit:hover {
-    text-decoration: underline;
-  }
-  
+/* Estilos para los enlaces de navegación y botones */
+.submit {
+  margin-top: 20px; /* Añadimos espacio entre las tarjetas de vuelo y los enlaces/botones */
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.submit:hover {
+  text-decoration: underline;
+}
+
   

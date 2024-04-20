@@ -3,6 +3,7 @@ import axios from 'axios';
 import Flightcard from './Flightcard';
 import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import NavBar from '../navbar/NavBar'; // Importa el componente NavBar
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
@@ -63,52 +64,57 @@ export default function Listingflights() {
   };
   
 
-    return (
-        <div>
-            {isAuthenticated && (
-                <div className="list">
-                    <div className="list-flight">
-                        {Array.isArray(flightCards) && flightCards.map(flightCard => (
-                            <Flightcard key={flightCard.id} flightCard={flightCard} />
-                        ))}
-                    </div>
-                    <a className='submit' href='/'>Go home</a>
-                    <a className='submit' href='/historial'>Ver historial de compra</a>
-                </div>
-            )}
-            {!isAuthenticated && (
-                <div className="list">
-                    <h1>Log in to see the flights</h1>
-                    <a className='submit' href='/'>Go home</a>
-                </div>
-            )}
-            <div>
-                <label htmlFor="departureAirport">Departure Airport:</label>
-                <select id="departureAirport" value={selectedDepartureAirport} onChange={(e) => setSelectedDepartureAirport(e.target.value)}>
-                    <option value="">Select departure airport</option>
-                    {departureAirports.map(airport => (
-                        <option key={airport} value={airport}>{airport}</option>
-                    ))}
-                </select>
+  return (
+    <div>
+        <NavBar isLoggedIn={isAuthenticated} /> {/* Renderiza la barra de navegación */}
 
-                <label htmlFor="arrivalAirport">Arrival Airport:</label>
-                <select id="arrivalAirport" value={selectedArrivalAirport} onChange={(e) => setSelectedArrivalAirport(e.target.value)}>
-                    <option value="">Select arrival airport</option>
-                    {arrivalAirports.map(airport => (
-                        <option key={airport} value={airport}>{airport}</option>
-                    ))}
-                </select>
+        <div className="list-filters">
+            <label htmlFor="departureAirport">Departure Airport:</label>
+            <select id="departureAirport" value={selectedDepartureAirport} onChange={(e) => setSelectedDepartureAirport(e.target.value)}>
+                <option value="">Select departure airport</option>
+                {departureAirports.map(airport => (
+                    <option key={airport} value={airport}>{airport}</option>
+                ))}
+            </select>
 
-                <label htmlFor="departureAirportTime">Departure Airport Time:</label>
-                <input
-                    type="datetime-local" // Usa datetime-local para seleccionar la fecha y hora
-                    id="departureAirportTime"
-                    value={departureAirportTime}
-                    onChange={(e) => setDepartureAirportTime(e.target.value)}
-                />
+            <label htmlFor="arrivalAirport">Arrival Airport:</label>
+            <select id="arrivalAirport" value={selectedArrivalAirport} onChange={(e) => setSelectedArrivalAirport(e.target.value)}>
+                <option value="">Select arrival airport</option>
+                {arrivalAirports.map(airport => (
+                    <option key={airport} value={airport}>{airport}</option>
+                ))}
+            </select>
 
-                <button onClick={handleSearch}>Search</button>
-            </div>
+            <label htmlFor="departureAirportTime">Departure Airport Time:</label>
+            <input
+                type="datetime-local" // Usa datetime-local para seleccionar la fecha y hora
+                id="departureAirportTime"
+                value={departureAirportTime}
+                onChange={(e) => setDepartureAirportTime(e.target.value)}
+            />
+
+            <button onClick={handleSearch}>Search</button>
         </div>
-    );
+        
+        {isAuthenticated && (
+            <div className="list">
+                <div className="list-flight">
+                    {Array.isArray(flightCards) && flightCards.map(flightCard => (
+                        <Flightcard key={flightCard.id} flightCard={flightCard} />
+                    ))}
+                </div>
+                <a className='submit' href='/'>Go home</a>
+                <a className='submit' href='/historial'>Ver historial de compra</a>
+            </div>
+        )}
+        {!isAuthenticated && (
+            <div className="list">
+                <h1>Log in to see the flights</h1>
+                <a className='submit' href='/'>Go home</a>
+            </div>
+        )}
+    </div>
+);
+
 };
+
