@@ -14,7 +14,7 @@ export default function Listingflights() {
 
             const fetchFlights = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3000/flights/historial/${userId}`);
+                    const response = await axios.get(`https://panchomro.me/flights/historial/${userId}`);
                     console.log(response.data);
                     setFlightCards(response.data);
                 } catch (error) {

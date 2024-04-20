@@ -18,7 +18,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/flights/${flightid}`);
+          const response = await axios.get(`https://panchomro.me/flights/${flightid}`);
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -35,7 +35,7 @@ export default function FlightDetails() {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
           console.log('userId:', userId);
-          const response = await axios.post(`http://localhost:3000/flights/${flightid}/${userId}/buy`, {
+          const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
             quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
           });
           console.log('Purchase successful:', response.data);
