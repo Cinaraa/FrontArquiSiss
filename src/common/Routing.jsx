@@ -16,7 +16,7 @@ function Routing() {
 
   return (
     <BrowserRouter>
-      <NavBar isLoggedIn={isAuthenticated} logout={logout} />
+      {/* <NavBar isLoggedIn={isAuthenticated} logout={logout} /> */}
       <Routes>
         <Route path={"/"} element={<App />}/>
         <Route path={"/perfil"} element={<Profileinfo />}/>
