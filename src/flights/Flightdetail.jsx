@@ -12,7 +12,7 @@ export default function FlightDetails() {
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showLoginPopup, setShowLoginPopup] = useState(false); // Estado para controlar la visualización del popup
-  const { isAuthenticated, user } = useAuth0();
+  const {isLoading, isAuthenticated, user } = useAuth0();
 
   useEffect(() => {
     const fetchFlightDetails = async () => {
@@ -29,7 +29,7 @@ export default function FlightDetails() {
 
   const handleBuyNow = async () => {
     try {
-      if (isAuthenticated) {
+      if (!isLoading && isAuthenticated) {
         const userId = user.sub;
         console.log('userId:', userId);
         const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
