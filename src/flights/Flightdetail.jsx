@@ -12,6 +12,9 @@ export default function FlightDetails() {
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { isLoading, isAuthenticated, user } = useAuth0();
+  const [ip, setIP] = useState("");
+  const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState("");
 
 
   useEffect(() => {
@@ -29,6 +32,33 @@ export default function FlightDetails() {
     }
   }, [flightid]);
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            // Obtener la dirección IP
+            const ipRes = await axios.get("https://api.ipify.org/?format=json");
+            const userIP = ipRes.data.ip;
+            setIP(userIP);
+
+            // Obtener la información de ubicación
+            const locationRes = await axios.get(`https://api.geoapify.com/v1/ipinfo?apiKey=c4483a9a22c74a52850e281789f5e38c&ip=${userIP}`);
+            setLocation(locationRes.data);
+
+            // Obtener la dirección a partir de la latitud y longitud
+            const { latitude, longitude } = locationRes.data.location;
+            const addressRes = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=c4483a9a22c74a52850e281789f5e38c`);
+            setAddress(addressRes.data.features[0].properties.formatted);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    if (isAuthenticated) {
+        fetchData();
+    }
+}, [isAuthenticated]);
+
   
     const handleBuyNow = async () => {
       try {
@@ -36,7 +66,8 @@ export default function FlightDetails() {
           const userId = user.sub;
           console.log('userId:', userId);
           const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
-            quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
+            quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
+            ip: ip
           });
           console.log('Purchase successful:', response.data);
         }
