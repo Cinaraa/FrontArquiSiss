@@ -38,65 +38,61 @@ export default function Listingflights() {
     }, []);
 
     const handleSearch = async () => {
-      if (isAuthenticated){
-          try {
-              const params = {};
-              if (selectedDepartureAirport) {
-                  params.departure_airport_id = selectedDepartureAirport;
-              }
-              if (selectedArrivalAirport) {
-                  params.arrival_airport_id = selectedArrivalAirport;
-              }
-              if (departureAirportTime) {
-                  params.departure_airport_time = departureAirportTime;
-              }
-  
-              const response = await axios.get('https://panchomro.me/flights', {
-                  params: params
-              });
-              console.log(response.data.flights);
-  
-              setFlightCards(response.data.flights);
-          } catch (error) {
-              console.error(error);
-          }
-      }
-  };
-  
+        try {
+            const params = {};
+            if (selectedDepartureAirport) {
+                params.departure_airport_id = selectedDepartureAirport;
+            }
+            if (selectedArrivalAirport) {
+                params.arrival_airport_id = selectedArrivalAirport;
+            }
+            if (departureAirportTime) {
+                params.departure_airport_time = departureAirportTime;
+            }
 
-  return (
-    <div>
-        <NavBar isLoggedIn={isAuthenticated} /> {/* Renderiza la barra de navegación */}
+            const response = await axios.get('https://panchomro.me/flights', {
+                params: params
+            });
+            console.log(response.data.flights);
 
-        <div className="list-filters">
-            <label htmlFor="departureAirport">Departure Airport:</label>
-            <select id="departureAirport" value={selectedDepartureAirport} onChange={(e) => setSelectedDepartureAirport(e.target.value)}>
-                <option value="">Select departure airport</option>
-                {departureAirports.map(airport => (
-                    <option key={airport} value={airport}>{airport}</option>
-                ))}
-            </select>
+            setFlightCards(response.data.flights);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-            <label htmlFor="arrivalAirport">Arrival Airport:</label>
-            <select id="arrivalAirport" value={selectedArrivalAirport} onChange={(e) => setSelectedArrivalAirport(e.target.value)}>
-                <option value="">Select arrival airport</option>
-                {arrivalAirports.map(airport => (
-                    <option key={airport} value={airport}>{airport}</option>
-                ))}
-            </select>
+    return (
+        <div>
+            <NavBar isLoggedIn={isAuthenticated} /> {/* Renderiza la barra de navegación */}
+            
+            <div className="list-filters">
+                <label htmlFor="departureAirport">Departure Airport:</label>
+                <select id="departureAirport" value={selectedDepartureAirport} onChange={(e) => setSelectedDepartureAirport(e.target.value)}>
+                    <option value="">Select departure airport</option>
+                    {departureAirports.map(airport => (
+                        <option key={airport} value={airport}>{airport}</option>
+                    ))}
+                </select>
 
-            <label htmlFor="departureAirportTime">Departure Airport Time:</label>
-            <input
-                type="datetime-local" // Usa datetime-local para seleccionar la fecha y hora
-                id="departureAirportTime"
-                value={departureAirportTime}
-                onChange={(e) => setDepartureAirportTime(e.target.value)}
-            />
+                <label htmlFor="arrivalAirport">Arrival Airport:</label>
+                <select id="arrivalAirport" value={selectedArrivalAirport} onChange={(e) => setSelectedArrivalAirport(e.target.value)}>
+                    <option value="">Select arrival airport</option>
+                    {arrivalAirports.map(airport => (
+                        <option key={airport} value={airport}>{airport}</option>
+                    ))}
+                </select>
 
-            <button onClick={handleSearch}>Search</button>
-        </div>
-        
-        {isAuthenticated && (
+                <label htmlFor="departureAirportTime">Departure Airport Time:</label>
+                <input
+                    type="datetime-local" // Usa datetime-local para seleccionar la fecha y hora
+                    id="departureAirportTime"
+                    value={departureAirportTime}
+                    onChange={(e) => setDepartureAirportTime(e.target.value)}
+                />
+
+                <button onClick={handleSearch}>Search</button>
+            </div>
+                
             <div className="list">
                 <div className="list-flight">
                     {Array.isArray(flightCards) && flightCards.map(flightCard => (
@@ -104,17 +100,18 @@ export default function Listingflights() {
                     ))}
                 </div>
                 <a className='submit' href='/'>Go home</a>
-                <a className='submit' href='/historial'>Ver historial de compra</a>
+                {isAuthenticated && (
+                    <a className='submit' href='/historial'>Ver historial de compra</a>
+                )}
             </div>
-        )}
-        {!isAuthenticated && (
-            <div className="list">
-                <h1>Log in to see the flights</h1>
-                <a className='submit' href='/'>Go home</a>
-            </div>
-        )}
-    </div>
-);
-
+            {/* {!isAuthenticated && (
+                <div className="list">
+                    <h1>Log in to see the flights</h1>
+                    <a className='submit' href='/'>Go home</a>
+                </div>
+            )} */}
+        </div>
+    );
 };
+
 

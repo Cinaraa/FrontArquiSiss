@@ -3,46 +3,45 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Flightdetail.css';
 import LoginButton from '../profile/LoginButton';
+import LoginPopup from '../loginpopup/LoginPopup'; // Importa el componente LoginPopup
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-
 
 export default function FlightDetails() {
   const { id: flightid } = useParams(); 
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { isLoading, isAuthenticated, user } = useAuth0();
-
+  const [showLoginPopup, setShowLoginPopup] = useState(false); // Estado para controlar la visualización del popup
+  const { isAuthenticated, user } = useAuth0();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      const fetchFlightDetails = async () => {
-        try {
-          const response = await axios.get(`https://panchomro.me/flights/${flightid}`);
-          setFlight(response.data);
-        } catch (error) {
-          console.error('Error fetching flight details:', error);
-        }
-      };
+    const fetchFlightDetails = async () => {
+      try {
+        const response = await axios.get(`https://panchomro.me/flights/${flightid}`);
+        setFlight(response.data);
+      } catch (error) {
+        console.error('Error fetching flight details:', error);
+      }
+    };
 
-      fetchFlightDetails();
-    }
+    fetchFlightDetails();
   }, [flightid]);
 
-  
-    const handleBuyNow = async () => {
-      try {
-        if (!isLoading && isAuthenticated) {
-          const userId = user.sub;
-          console.log('userId:', userId);
-          const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
-            quantity: quantity // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
-          });
-          console.log('Purchase successful:', response.data);
-        }
-      } catch (error) {
-        console.error('Error purchasing flight:', error);
+  const handleBuyNow = async () => {
+    try {
+      if (isAuthenticated) {
+        const userId = user.sub;
+        console.log('userId:', userId);
+        const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
+          quantity: quantity
+        });
+        console.log('Purchase successful:', response.data);
+      } else {
+        setShowLoginPopup(true); // Mostrar el popup si el usuario no está autenticado
       }
+    } catch (error) {
+      console.error('Error purchasing flight:', error);
+    }
   };
 
   if (!flight) {
@@ -65,20 +64,20 @@ export default function FlightDetails() {
 
       <label htmlFor="quantity">Cantidad de Pasajes:</label>
       <select id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
-        {/* Opciones para la cantidad de pasajes */}
-        {Array.from({length: flight.quantity}, (_, i) => i + 1).map(num => (
+        {Array.from({ length: flight.quantity }, (_, i) => i + 1).map(num => (
           <option key={num} value={num}>{num}</option>
         ))}
       </select>
 
-      {isAuthenticated && (
-        <button onClick={handleBuyNow}>Buy Now</button>
-      )}
-      {!isAuthenticated && (
-        <LoginButton className="login-button" />
-      )}
+      <button onClick={handleBuyNow}>Buy Now</button>
+      <LoginButton className="login-button" />
+
       <Link to={`/Listingflights`}>Volver a vuelos</Link>
 
+      {/* Mostrar el popup si showLoginPopup es true */}
+      {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
     </div>
   );
 }
+
+
