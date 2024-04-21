@@ -63,7 +63,7 @@ export default function Listingflights() {
 
     return (
         <div>
-            <NavBar isLoggedIn={isAuthenticated} /> {/* Renderiza la barra de navegación */}
+            <NavBar isLoggedIn={isAuthenticated} />
             
             <div className="list-filters">
                 <label htmlFor="departureAirport">Departure Airport:</label>

@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Flightdetail.css';
 import LoginButton from '../profile/LoginButton';
-import LoginPopup from '../loginpopup/LoginPopup'; // Importa el componente LoginPopup
+import LoginPopup from '../popups/LoginPopup';
+import CompraPopup from '../popups/CompraPopup';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 
@@ -11,8 +12,11 @@ export default function FlightDetails() {
   const { id: flightid } = useParams(); 
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [showLoginPopup, setShowLoginPopup] = useState(false); // Estado para controlar la visualización del popup
-  const {isLoading, isAuthenticated, user } = useAuth0();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // Estado para controlar la visualización del popup de éxito
+  const [showProcessingPopup, setShowProcessingPopup] = useState(false); // Estado para controlar la visualización del popup de procesamiento
+  const [popupMessage, setPopupMessage] = useState(''); // Mensaje para el popup
+  const { isLoading, isAuthenticated, user } = useAuth0();
 
   useEffect(() => {
     const fetchFlightDetails = async () => {
@@ -32,15 +36,22 @@ export default function FlightDetails() {
       if (!isLoading && isAuthenticated) {
         const userId = user.sub;
         console.log('userId:', userId);
+        setShowProcessingPopup(true);
         const response = await axios.post(`https://panchomro.me/flights/${flightid}/${userId}/buy`, {
           quantity: quantity
         });
         console.log('Purchase successful:', response.data);
+        setPopupMessage('Solicitud de compra exitosa!');
+        setShowSuccessPopup(true);
+        setShowProcessingPopup(false);
       } else {
-        setShowLoginPopup(true); // Mostrar el popup si el usuario no está autenticado
+        setShowLoginPopup(true); 
       }
     } catch (error) {
       console.error('Error purchasing flight:', error);
+      setPopupMessage('Error al realizar la solicitud de compra, intentelo denuevo más tarde.');
+      setShowSuccessPopup(true);
+      setShowProcessingPopup(false);
     }
   };
 
@@ -70,14 +81,12 @@ export default function FlightDetails() {
       </select>
 
       <button onClick={handleBuyNow}>Buy Now</button>
-      <LoginButton className="login-button" />
 
       <Link to={`/Listingflights`}>Volver a vuelos</Link>
 
-      {/* Mostrar el popup si showLoginPopup es true */}
       {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
+      {showSuccessPopup && <CompraPopup message={popupMessage} onClose={() => setShowSuccessPopup(false)} />}
+      {showProcessingPopup && <CompraPopup message="Estamos procesando su solicitud..." />}
     </div>
   );
 }
-
-
