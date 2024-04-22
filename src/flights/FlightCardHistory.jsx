@@ -12,14 +12,14 @@ export default function Flightcard({ flightCard }) { // Cambia flightcard a flig
             <img src={flightCard.airline_logo} alt="airline logo"/>
           </div>
           <div className="flight-card-info-header-departure">
-            <p>{flightCard.departure_airport}</p>
-            <p>{flightCard.departure_time}</p>
-            <p>{flightCard.datetime}</p>
-            <p>{flightCard.quantity}</p>
-            <p>{flightCard.totalPrice}</p>
+            <p>Aeropuerto origen: {flightCard.departure_airport}</p>
+            <p>Horario salida: {flightCard.departure_time}</p>
+            <p>Horario compra: {flightCard.datetime}</p>
+            <p>Cantidad comprada: {flightCard.quantity}</p>
+            <p>Precio total: {flightCard.totalPrice}</p>
           </div>
           <div className="flight-card-info-header-arrival">
-            <p>{flightCard.arrival_airport}</p>
+            <p>Aeropuerto llegada:{flightCard.arrival_airport}</p>
           </div>
         </div>
         <div className="flight-card-info-footer">
