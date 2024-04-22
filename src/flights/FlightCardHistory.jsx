@@ -16,6 +16,7 @@ export default function Flightcard({ flightCard }) { // Cambia flightcard a flig
             <p>{flightCard.departure_time}</p>
             <p>{flightCard.datetime}</p>
             <p>{flightCard.quantity}</p>
+            <p>{flightCard.totalPrice}</p>
           </div>
           <div className="flight-card-info-header-arrival">
             <p>{flightCard.arrival_airport}</p>

@@ -64,7 +64,7 @@ export default function FlightDetails() {
       try {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
-          const response = await axios.post(`https://api.panchomro.me/buy`, {
+          const response = await axios.post(`https://panchomro.me/buy`, {
             flightId: flightId,
             userId: userId,
             quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
@@ -98,10 +98,14 @@ export default function FlightDetails() {
       <label htmlFor="quantity">Cantidad de Pasajes:</label>
       <select id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
         {/* Opciones para la cantidad de pasajes */}
-        {Array.from({length: flight.quantity}, (_, i) => i + 1).map(num => (
+        {Array.from({ length: Math.min(flight.quantity, 4) }, (_, i) => i + 1).map(num => (
           <option key={num} value={num}>{num}</option>
         ))}
+        {flight.quantity < 4 && (
+          <option value={flight.quantity}>{flight.quantity}</option>
+        )}
       </select>
+
 
       {isAuthenticated && (
         <button onClick={handleBuyNow}>Buy Now</button>
