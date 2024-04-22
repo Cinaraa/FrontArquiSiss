@@ -9,22 +9,20 @@ import { useAuth0 } from '@auth0/auth0-react';
 import NavBar from '../navbar/NavBar';
 import HistorialCompra from '../flights/HistorialCompra'
 
-
-
 function Routing() {
   const { isAuthenticated, logout } = useAuth0();
 
   return (
     <BrowserRouter>
-      {/* <NavBar isLoggedIn={isAuthenticated} logout={logout} /> */}
+      <NavBar isLoggedIn={isAuthenticated} logout={logout} />
       <Routes>
-        <Route path={"/"} element={<App />}/>
-        <Route path={"/perfil"} element={<Profileinfo />}/>
-        <Route path={"/signup"} element={<Signup />}/>
-        <Route path={"/login"} element={<Login />}/>
-        <Route path={"/listingflights"} element={<Listingflights />}/>
-        <Route path={"/flight/:id"} element={<FlightDetails />}/>
-        <Route path={"/historial"} element={<HistorialCompra/>} />
+        <Route path={"/"} element={<App />} />
+        <Route path={"/perfil"} element={<Profileinfo />} />
+        <Route path={"/signup"} element={<Signup />} />
+        <Route path={"/login"} element={<Login />} />
+        <Route path={"/listingflights"} element={<Listingflights />} />
+        <Route path={"/flight/:id"} element={<FlightDetails />} />
+        <Route path={"/historial-compras"} element={<HistorialCompra />} />
       </Routes>
     </BrowserRouter>
   );

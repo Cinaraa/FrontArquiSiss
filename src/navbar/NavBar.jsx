@@ -10,6 +10,9 @@ const NavBar = ({ isLoggedIn, logout }) => {
       <div className="navbar-left">
         <ul>
           <li>
+            <Link to="/">Inicio</Link>
+          </li>
+          <li>
             <Link to="/listingflights">Flights</Link>
           </li>
         </ul>
@@ -37,6 +40,7 @@ const NavBar = ({ isLoggedIn, logout }) => {
 };
 
 export default NavBar;
+
 
 
 
