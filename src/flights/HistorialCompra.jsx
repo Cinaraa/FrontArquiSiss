@@ -10,11 +10,14 @@ export default function Listingflights() {
     useEffect(() => {
         if (!isLoading && isAuthenticated) {
             const userId = user.sub;
-            console.log('userId:', userId);
 
             const fetchFlights = async () => {
                 try {
-                    const response = await axios.get(`https://panchomro.me/historial/${userId}`);
+                    const response = await axios.get(`https://api.panchomro.me/historial`,{
+                        params: {
+                            userId: userId
+                        }
+                    });
                     console.log(response.data);
                     setFlightCards(response.data);
                 } catch (error) {

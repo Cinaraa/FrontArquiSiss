@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function FlightDetails() {
-  const { id: flightid } = useParams(); 
+  const { id: flightId } = useParams(); 
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { isLoading, isAuthenticated, user } = useAuth0();
@@ -21,7 +21,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`https://panchomro.me/flights/${flightid}`);
+          const response = await axios.get(`https://api.panchomro.me/flights/${flightId}`);
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -30,7 +30,7 @@ export default function FlightDetails() {
 
       fetchFlightDetails();
     }
-  }, [flightid]);
+  }, [flightId]);
 
 
   useEffect(() => {
@@ -64,8 +64,9 @@ export default function FlightDetails() {
       try {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
-          console.log('userId:', userId);
-          const response = await axios.post(`https://panchomro.me/buy/${flightid}/${userId}`, {
+          const response = await axios.post(`https://api.panchomro.me/buy`, {
+            flightId: flightId,
+            userId: userId,
             quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
             ip: ip
           });

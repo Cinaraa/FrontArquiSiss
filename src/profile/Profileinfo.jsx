@@ -39,7 +39,6 @@ const Profileinfo = () => {
             <div>
                 <h1>Bienvenido, {user.name}</h1>
                 <img src={user.picture} alt={user.name} />
-                <h2>Tu IP es: {ip}</h2>
                 {address && <h2>Dirección: {address}</h2>}
             </div>
         )
