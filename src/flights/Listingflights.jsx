@@ -3,7 +3,7 @@ import axios from 'axios';
 import Flightcard from './Flightcard';
 import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import NavBar from '../navbar/NavBar'; // Importa el componente NavBar
+import NavBar from '../navbar/NavBar';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);

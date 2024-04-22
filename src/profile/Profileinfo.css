@@ -1,0 +1,11 @@
+.button-profile {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .button-profile:hover {
+    text-decoration: underline;
+  }
+  

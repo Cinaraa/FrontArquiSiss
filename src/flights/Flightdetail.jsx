@@ -13,9 +13,9 @@ export default function FlightDetails() {
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // Estado para controlar la visualización del popup de éxito
-  const [showProcessingPopup, setShowProcessingPopup] = useState(false); // Estado para controlar la visualización del popup de procesamiento
-  const [popupMessage, setPopupMessage] = useState(''); // Mensaje para el popup
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showProcessingPopup, setShowProcessingPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(''); 
   const { isLoading, isAuthenticated, user } = useAuth0();
 
   useEffect(() => {
