@@ -64,7 +64,7 @@ export default function FlightDetails() {
       try {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
-          const response = await axios.post(`api.panchomro.me/buy`, {
+          const response = await axios.post(`https://api.panchomro.me/buy`, {
             flightId: flightId,
             userId: userId,
             quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
