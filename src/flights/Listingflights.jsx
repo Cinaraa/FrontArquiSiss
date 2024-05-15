@@ -11,30 +11,35 @@ export default function Listingflights() {
     const [selectedDepartureAirport, setSelectedDepartureAirport] = useState('');
     const [selectedArrivalAirport, setSelectedArrivalAirport] = useState('');
     const [departureAirportTime, setDepartureAirportTime] = useState('');
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     
-
     useEffect(() => {
         const fetchFlights = async () => {
-            try {
-                const response = await axios.get('https://api.panchomro.me/flights');
-                console.log(response.data.flights);
-                setFlightCards(response.data.flights); // Acceder a la clave 'flights'
-
-                // Obtener aeropuertos de salida únicos
-                const uniqueDepartureAirports = Array.from(new Set(response.data.flights.map(flight => flight.departure_airport_id)));
-                setDepartureAirports(uniqueDepartureAirports);
-
-                // Obtener aeropuertos de llegada únicos
-                const uniqueArrivalAirports = Array.from(new Set(response.data.flights.map(flight => flight.arrival_airport_id)));
-                setArrivalAirports(uniqueArrivalAirports);
-            } catch (error) {
-                console.error(error);
-            }
+          try {
+            const token = await getAccessTokenSilently();
+            console.log(token);
+            const response = await axios.get('http://localhost:3000/flights', {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+            console.log(response.data.flights);
+            setFlightCards(response.data.flights);
+    
+            // Obtener aeropuertos de salida únicos
+            const uniqueDepartureAirports = Array.from(new Set(response.data.flights.map(flight => flight.departure_airport_id)));
+            setDepartureAirports(uniqueDepartureAirports);
+    
+            // Obtener aeropuertos de llegada únicos
+            const uniqueArrivalAirports = Array.from(new Set(response.data.flights.map(flight => flight.arrival_airport_id)));
+            setArrivalAirports(uniqueArrivalAirports);
+          } catch (error) {
+            console.error(error);
+          }
         };
-
+    
         fetchFlights();
-    }, []);
+      }, [getAccessTokenSilently]);
 
     const handleSearch = async () => {
       if (isAuthenticated){
@@ -49,9 +54,12 @@ export default function Listingflights() {
               if (departureAirportTime) {
                   params.departure_airport_time = departureAirportTime;
               }
-  
-              const response = await axios.get('https://api.panchomro.me/flights', {
-                  params: params
+              const token = await getAccessTokenSilently();
+              const response = await axios.get('http://localhost:3000/flights', {
+                  params: params,
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  }
               });
               console.log(response.data.flights);
   

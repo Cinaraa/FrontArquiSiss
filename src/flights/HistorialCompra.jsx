@@ -6,20 +6,22 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
-    const { isLoading, isAuthenticated, user } = useAuth0();
+    const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
     useEffect(() => {
         if (!isLoading && isAuthenticated) {
-            const userId = user.sub;
-
             const fetchFlights = async () => {
                 try {
-                    const response = await axios.get(`https://api.panchomro.me/historial`,{
-                        params: {
-                            userId: userId
-                        }
-                    });
-                    console.log(response.data);
-                    setFlightCards(response.data);
+                    if (!isLoading){
+                        const token = await getAccessTokenSilently();
+                        const response = await axios.get('http://localhost:3000/historial', {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        });
+                        console.log(response.data);
+                        setFlightCards(response.data);
+                    }
                 } catch (error) {
                     console.error(error);
                 }
@@ -27,8 +29,9 @@ export default function Listingflights() {
 
             fetchFlights();
         }
-    }, [isLoading, isAuthenticated, user]);
-      return (
+    }, [isLoading, isAuthenticated, getAccessTokenSilently]);
+      
+    return (
         <div>
           {isAuthenticated && (
             <div className="list">
