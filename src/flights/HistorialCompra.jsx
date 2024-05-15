@@ -13,7 +13,7 @@ export default function Listingflights() {
 
             const fetchFlights = async () => {
                 try {
-                    const response = await axios.get(`https://panchomro.me/historial`,{
+                    const response = await axios.get(`api.panchomro.me/historial`,{
                         params: {
                             userId: userId
                         }
