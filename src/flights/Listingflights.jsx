@@ -18,12 +18,12 @@ export default function Listingflights() {
           try {
             const token = await getAccessTokenSilently();
             console.log(token);
-            const response = await axios.get('http://localhost:3000/flights', {
+            const response = await axios.get('api.panchomro.me/flights', {
               headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
               }
             });
-            console.log(response.data.flights);
+            console.log(response);
             setFlightCards(response.data.flights);
     
             // Obtener aeropuertos de salida únicos
@@ -55,10 +55,11 @@ export default function Listingflights() {
                   params.departure_airport_time = departureAirportTime;
               }
               const token = await getAccessTokenSilently();
-              const response = await axios.get('http://localhost:3000/flights', {
+              const response = await axios.get('api.panchomro.me/flights', {
                   params: params,
                   headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                   }
               });
               console.log(response.data.flights);
