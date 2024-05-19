@@ -21,7 +21,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/flights/${flightId}`);
+          const response = await axios.get(`localhost:3000/flights/${flightId}`);
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -30,7 +30,7 @@ export default function FlightDetails() {
 
       fetchFlightDetails();
     }
-  }, [flightId]);
+  }, [flightId, isAuthenticated]);
 
 
   useEffect(() => {
@@ -63,33 +63,14 @@ export default function FlightDetails() {
     const handleBuyNow = async () => {
       try {
         if (!isLoading && isAuthenticated) {
-          const userId = user.sub;
-          
-          //paso 1: iniciar una transaccion con webpay
-          const webpayResponse = await axios.post(`http://localhost:3000/api/payment/initiate`, {
-            amount: flight.price * quantity,
-            sessionId: userId,
-            buyOrder: flightId,
-            returnUrl: 'http://localhost:3000/api/payment/return',
-            finalUrl: 'http://localhost:3000/api/payment/final',
+          const response = await axios.post('http://localhost:3000/webpay/initiate', {
+            flightId,
+            quantity
           });
-
-          //paso 2: enviar solicitud de compra al broker
-          const purchaseResponse = await axios.post(`http://localhost:3000/buy`, {
-            userId,
-            flightId: flightId,
-            quantity,
-            ip,
-            deposit_token: webpayResponse.data.token,
-        });
-
-        console.log('purchaseResponse:', purchaseResponse.data);
-
-        //paso 3: inciar el proceso de pago en webpay
-        window.location.href = webpayResponse.data.url;
+          window.location.href = response.data.url;
         }
       } catch (error) {
-        console.error('Error purchasing flight:', error);
+        console.error('Error initiating purchase:', error);
       }
   };
 
