@@ -14,12 +14,12 @@ export default function Listingflights() {
                 try {
                     if (!isLoading){
                         const token = await getAccessTokenSilently();
-                        const response = await axios.get('http://localhost:3000/historial', {
+                        const response = await axios.get('https://api.panchomro.me/historial', {
                             headers: {
                                 Authorization: `Bearer ${token}`
                             }
                         });
-                        console.log(response.data);
+                        console.log(response);
                         setFlightCards(response.data);
                     }
                 } catch (error) {

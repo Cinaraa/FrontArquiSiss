@@ -21,11 +21,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const token = await getAccessTokenSilently();
-          const response = await axios.get(`http://localhost:3000/flights/${flightId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+          const response = await axios.get(`https://api.panchomro.me/flights/${flightId}`, {
           });
           setFlight(response.data);
         } catch (error) {
@@ -70,16 +66,20 @@ const handleBuyNow = async () => {
       if (!isLoading && isAuthenticated) {
           const token = await getAccessTokenSilently();
           console.log(token)
-          const response = await axios.post(`http://localhost:3000/buy`, null, {
-              params: {
-                  flightId: flightId,
-                  quantity: quantity,
-                  ip: ip
-              },
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
-          });
+          const response = await axios.post(
+            `https://api.panchomro.me/buy`,
+            {
+                flightId: flightId,
+                quantity: quantity,
+                ip: ip
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
           console.log('Purchase successful:', response.data);
       }
   } catch (error) {
