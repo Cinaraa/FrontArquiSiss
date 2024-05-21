@@ -66,7 +66,12 @@ export default function FlightDetails() {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
           console.log('Intentando obtener el token...');
-          const token = await getAccessTokenSilently();
+          const options = {
+            audience: 'https://api.panchomro.me', // Reemplaza esto con el identificador de tu API
+          };
+          
+          const token = await getAccessTokenSilently(options);
+          
           console.log('Token obtenido:', token);
           
           console.log(token)
