@@ -81,6 +81,20 @@ const handleBuyNow = async () => {
             }
         );
           console.log('Purchase successful:', response.data);
+
+          //ahora creamos el formulario y lo enviamos
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = response.data.url;
+
+          const tokenInput = document.createElement('input');
+          tokenInput.type = 'hidden';
+          tokenInput.name = 'token_ws';
+          tokenInput.value = response.data.token;
+          form.appendChild(tokenInput);
+
+          document.body.appendChild(form);
+          form.submit();
       }
   } catch (error) {
       console.error('Error purchasing flight:', error);
