@@ -1,0 +1,6 @@
+{
+    "audience": "https://flights_api.auth/",
+    "scope": "offline_access",
+    "clientId": "5bLCwk5Hdl24LBMAhhdv3dYQJuEb5ZIA",
+    "domain": "dev-8v3xbi0ihbyftsnr.us.auth0.com"
+}

@@ -64,13 +64,13 @@ export default function FlightDetails() {
       try {
         console.log('Creating transaction...');
         if (!isLoading && isAuthenticated) {
-          const userId = user.sub;
           console.log('Intentando obtener el token...');
-          const options = {
-            audience: 'https://api.panchomro.me', // Reemplaza esto con el identificador de tu API
-          };
+          // const options = {
+          //   audience: 'https://flights_api.auth',
+          //   domain: 'dev-8v3xbi0ihbyftsnr.us.auth0.com'
+          // };
           
-          const token = await getAccessTokenSilently(options);
+          const token = await getAccessTokenSilently();
           
           console.log('Token obtenido:', token);
           
@@ -78,7 +78,6 @@ export default function FlightDetails() {
           const response = await axios.post(`http://localhost:3000/create-transaction`, {
             flightId: flightId,
             quantity: quantity,
-            userId: userId,
             ip: ip
         },
         {
