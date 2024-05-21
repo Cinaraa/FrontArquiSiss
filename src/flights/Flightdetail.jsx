@@ -11,7 +11,7 @@ export default function FlightDetails() {
   const { id: flightId } = useParams(); 
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { isLoading, isAuthenticated, user } = useAuth0();
+  const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [ip, setIP] = useState("");
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState("");
@@ -21,7 +21,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`api.panchomro.me/flights/${flightId}`);
+          const response = await axios.get(`http://localhost:3000/flights/${flightId}`);
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -62,18 +62,32 @@ export default function FlightDetails() {
   
     const handleBuyNow = async () => {
       try {
+        console.log('Creating transaction...');
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
-          const response = await axios.post(`https://api.panchomro.me/buy`, {
+          console.log('Intentando obtener el token...');
+          const token = await getAccessTokenSilently();
+          console.log('Token obtenido:', token);
+          
+          console.log(token)
+          const response = await axios.post(`http://localhost:3000/create-transaction`, {
             flightId: flightId,
+            quantity: quantity,
             userId: userId,
-            quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
             ip: ip
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
           });
-          console.log('Purchase successful:', response.data);
+          console.log('transaction created:', response.data);
+
+          window.location.href = response.data.url;
         }
       } catch (error) {
-        console.error('Error purchasing flight:', error);
+        console.error('Error creating transaction:', error);
       }
   };
 
