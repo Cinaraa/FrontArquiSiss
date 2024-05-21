@@ -18,7 +18,7 @@ export default function Listingflights() {
           try {
             const token = await getAccessTokenSilently();
             console.log(token);
-            const response = await axios.get('https://api.panchomro.me/flights', {
+            const response = await axios.get('http://localhost:3000/flights', {
             });
             console.log(response);
             setFlightCards(response.data.flights);
@@ -51,7 +51,7 @@ export default function Listingflights() {
               if (departureAirportTime) {
                   params.departure_airport_time = departureAirportTime;
               }
-              const response = await axios.get('https://api.panchomro.me/flights', {
+              const response = await axios.get('http://localhost:3000/flights', {
                   params: params,
               });
               console.log(response.data.flights);

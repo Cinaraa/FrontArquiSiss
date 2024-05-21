@@ -21,7 +21,7 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`https://api.panchomro.me/flights/${flightId}`, {
+          const response = await axios.get(`http://localhost:3000/flights/${flightId}`, {
           });
           setFlight(response.data);
         } catch (error) {
@@ -67,7 +67,7 @@ const handleBuyNow = async () => {
           const token = await getAccessTokenSilently();
           console.log(token)
           const response = await axios.post(
-            `https://api.panchomro.me/buy`,
+            `http://localhost:3000/create-transaction`,
             {
                 flightId: flightId,
                 quantity: quantity,
