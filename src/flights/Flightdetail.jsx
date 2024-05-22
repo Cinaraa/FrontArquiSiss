@@ -75,7 +75,7 @@ export default function FlightDetails() {
           console.log('Token obtenido:', token);
           
           console.log(token)
-          const response = await axios.post(`http://localhost:3000/create-transaction`, {
+          const response = await axios.post(`http://localhost:3000/buy`, {
             flightId: flightId,
             quantity: quantity,
             ip: ip
