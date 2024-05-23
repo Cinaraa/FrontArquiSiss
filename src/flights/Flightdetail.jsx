@@ -11,7 +11,7 @@ export default function FlightDetails() {
   const { id: flightId } = useParams(); 
   const [flight, setFlight] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [ip, setIP] = useState("");
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState("");
@@ -22,6 +22,7 @@ export default function FlightDetails() {
       const fetchFlightDetails = async () => {
         try {
           const response = await axios.get(`http://localhost:3000/flights/${flightId}`);
+
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -30,7 +31,7 @@ export default function FlightDetails() {
 
       fetchFlightDetails();
     }
-  }, [flightId]);
+  }, [flightId, getAccessTokenSilently]);
 
 
   useEffect(() => {
@@ -64,8 +65,8 @@ const handleBuyNow = async () => {
   try {
       if (!isLoading && isAuthenticated) {
           const token = await getAccessTokenSilently();
-          console.log(token)
-          const response = await axios.post('http://localhost:3000/buy',
+          const response = await axios.post(
+            `http://localhost:3000/buy`,
             {
                 flightId: flightId,
                 quantity: quantity,
@@ -78,13 +79,26 @@ const handleBuyNow = async () => {
                 }
             }
         );
-          console.log('Purchase successful:', response.data);
+
+          console.log('Purchase successful:', response);
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = response.data.url;
+
+          const tokenInput = document.createElement('input');
+          tokenInput.type = 'hidden';
+          tokenInput.name = 'token_ws';
+          tokenInput.value = response.data.token;
+          form.appendChild(tokenInput);
+
+          document.body.appendChild(form);
+          form.submit();
+          // window.location.href = response.data.url;
       }
-      } 
-        catch (error) {
-        console.error('Error purchasing flight:', error);
-    }
-  };
+  } catch (error) {
+      console.error('Error purchasing flight:', error);
+  }
+};
 
   if (!flight) {
     return <div>Loading...</div>;
