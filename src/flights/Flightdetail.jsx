@@ -67,7 +67,7 @@ const handleBuyNow = async () => {
           const token = await getAccessTokenSilently();
           console.log(token)
           const response = await axios.post(
-            `http://localhost:3000/create-transaction`,
+            `http://localhost:3000/buy`,
             {
                 flightId: flightId,
                 quantity: quantity,
@@ -80,7 +80,20 @@ const handleBuyNow = async () => {
                 }
             }
         );
-          console.log('Purchase successful:', response.data);
+          console.log('Purchase successful:', response);
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = response.data.url;
+
+          const tokenInput = document.createElement('input');
+          tokenInput.type = 'hidden';
+          tokenInput.name = 'token_ws';
+          tokenInput.value = response.data.token;
+          form.appendChild(tokenInput);
+
+          document.body.appendChild(form);
+          form.submit();
+          // window.location.href = response.data.url;
       }
   } catch (error) {
       console.error('Error purchasing flight:', error);
