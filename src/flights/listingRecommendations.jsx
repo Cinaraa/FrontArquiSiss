@@ -1,47 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Flightcard from './Flightcard';
-import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
-export default function Listingflights() {
-    const [flightCards, setFlightCards] = useState([]);
-    const { isLoading, isAuthenticated, user } = useAuth0();
-    useEffect(() => {
-        if (!isLoading && isAuthenticated) {
-            const userId = user.sub;
+const Recommendations = () => {
+  const { user, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-            const fetchFlights = async () => {
-                try { //${userId}
-                    const response = await axios.get(`http://localhost:3000/recommendations`);
-                    console.log(response.data);
-                    setFlightCards(response.data);
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-
-            fetchFlights();
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      const fetchRecommendations = async () => {
+        try {
+          const token = await getAccessTokenSilently();
+          const response = await axios.get('http://localhost:3000/recommendations', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          setRecommendations(response.data);
+        } catch (error) {
+          setError('Error fetching recommendations');
+          console.error('Error fetching recommendations:', error);
+        } finally {
+          setLoading(false);
         }
-    }, [isLoading, isAuthenticated, user]);
-      return (
-        <div>
-          {isAuthenticated && (
-            <div className="list">
-                <div className="list-flight">
-                    {Array.isArray(flightCards) && flightCards.map(flightCard => (
-                        <Flightcard key={flightCard.id} flightCard={flightCard} /> // Pasar flightCard como prop
-                    ))}
-                </div>
-                <a className='submit' href='/'>Go home</a>
-            </div>
-          )}
-          {!isAuthenticated && (
-            <div className="list">
-                <h1>Log in to see your flight history</h1>
-                <a className='submit' href='/'>Go home</a>
-            </div>
-          )}
-        </div>
-      );
+      };
+
+      fetchRecommendations();
+    }
+  }, [isLoading, isAuthenticated, user, getAccessTokenSilently]);
+
+  if (!isAuthenticated) {
+    return <div>Please log in to see your recommendations.</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <div>
+      <h2>Your Recommendations</h2>
+      {recommendations.length === 0 ? (
+        <p>No recommendations found</p>
+      ) : (
+        <ul>
+          {recommendations.map((recommendation) => (
+            <li key={recommendation.id}>
+              <p><strong>Created At:</strong> {new Date(recommendation.createdAt).toLocaleString()}</p>
+              <p><strong>User IP:</strong> {recommendation.user_ip}</p>
+              <div>
+                <h3>Recommendation Details:</h3>
+                <ul>
+                  {Object.values(recommendation.recommendations).map((rec, index) => (
+                    <li key={rec.id}>
+                      <h4>Recommendation {index + 1}</h4>
+                      <p><strong>Departure Airport:</strong> {rec.departure_airport_name} ({rec.departure_airport_id})</p>
+                      <p><strong>Departure Time:</strong> {new Date(rec.departure_airport_time).toLocaleString()}</p>
+                      <p><strong>Arrival Airport:</strong> {rec.arrival_airport_name} ({rec.arrival_airport_id})</p>
+                      <p><strong>Arrival Time:</strong> {new Date(rec.arrival_airport_time).toLocaleString()}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
+
+export default Recommendations;
