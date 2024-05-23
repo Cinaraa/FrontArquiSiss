@@ -7,7 +7,8 @@ import FlightDetails from '../flights/Flightdetail'
 import Profileinfo from '../profile/Profileinfo'
 import { useAuth0 } from '@auth0/auth0-react';
 import NavBar from '../navbar/NavBar';
-import HistorialCompra from '../flights/HistorialCompra'
+import HistorialCompra from '../flights/HistorialCompra';
+import Recomendations from '../flights/listingRecommendations';
 
 
 
@@ -25,6 +26,7 @@ function Routing() {
         <Route path={"/listingflights"} element={<Listingflights />}/>
         <Route path={"/flight/:id"} element={<FlightDetails />}/>
         <Route path={"/historial"} element={<HistorialCompra/>} />
+        <Route path={"/recommendations"} element={<Recomendations/>} />
       </Routes>
     </BrowserRouter>
   );
