@@ -10,8 +10,15 @@ const NavBar = ({ isLoggedIn, logout }) => {
       <div className="navbar-left">
         <ul>
           <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
             <Link to="/listingflights">Flights</Link>
           </li>
+          <li>
+            <Link to="/health">Health</Link>
+          </li>
+          
         </ul>
       </div>
       <div className="navbar-right">
@@ -25,6 +32,12 @@ const NavBar = ({ isLoggedIn, logout }) => {
               <li>
                 <Link to="/perfil">Mi perfil</Link>
               </li>
+              <li>
+            <Link to="/historial">Historial</Link>
+          </li>
+          <li>
+            <Link to="/recommendations">Recommendations</Link>
+          </li>
               <li>
                 {/* <LogoutButton logout={logout} /> */}
               </li>

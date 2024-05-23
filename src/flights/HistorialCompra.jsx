@@ -6,22 +6,26 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
-    const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
+    const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
     useEffect(() => {
         if (!isLoading && isAuthenticated) {
+            
+
             const fetchFlights = async () => {
                 try {
-                    if (!isLoading){
-                        const token = await getAccessTokenSilently();
-                        const response = await axios.get('http://localhost:3000/historial', {
+                    const token = await getAccessTokenSilently();
+                    const response = await axios.get(`http://localhost:3000/historial`,{
+                        
                             headers: {
-                                Authorization: `Bearer ${token}`
+                                Authorization: `Bearer ${token}`,
+                                'Content-Type': 'application/json'
                             }
-                        });
-                        console.log(response);
-                        setFlightCards(response.data);
-                    }
+                        
+                    });
+                    console.log(response.data);
+                    setFlightCards(response.data);
+
                 } catch (error) {
                     console.error(error);
                 }

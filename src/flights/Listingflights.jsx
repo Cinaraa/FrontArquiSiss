@@ -15,24 +15,21 @@ export default function Listingflights() {
     
     useEffect(() => {
         const fetchFlights = async () => {
-          try {
-            const token = await getAccessTokenSilently();
-            console.log(token);
-            const response = await axios.get('http://localhost:3000/flights', {
-            });
-            console.log(response);
-            setFlightCards(response.data.flights);
-    
-            // Obtener aeropuertos de salida únicos
-            const uniqueDepartureAirports = Array.from(new Set(response.data.flights.map(flight => flight.departure_airport_id)));
-            setDepartureAirports(uniqueDepartureAirports);
-    
-            // Obtener aeropuertos de llegada únicos
-            const uniqueArrivalAirports = Array.from(new Set(response.data.flights.map(flight => flight.arrival_airport_id)));
-            setArrivalAirports(uniqueArrivalAirports);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const response = await axios.get('http://localhost:3000/flights');
+                //console.log(response.data.flights);
+                setFlightCards(response.data.flights); // Acceder a la clave 'flights'
+
+                // Obtener aeropuertos de salida únicos
+                const uniqueDepartureAirports = Array.from(new Set(response.data.flights.map(flight => flight.departure_airport_id)));
+                setDepartureAirports(uniqueDepartureAirports);
+
+                // Obtener aeropuertos de llegada únicos
+                const uniqueArrivalAirports = Array.from(new Set(response.data.flights.map(flight => flight.arrival_airport_id)));
+                setArrivalAirports(uniqueArrivalAirports);
+            } catch (error) {
+                console.error(error);
+            }
         };
     
         fetchFlights();
@@ -51,10 +48,11 @@ export default function Listingflights() {
               if (departureAirportTime) {
                   params.departure_airport_time = departureAirportTime;
               }
+
               const response = await axios.get('http://localhost:3000/flights', {
                   params: params,
               });
-              console.log(response.data.flights);
+              //console.log(response.data.flights);
   
               setFlightCards(response.data.flights);
           } catch (error) {
@@ -75,7 +73,9 @@ export default function Listingflights() {
                     </div>
                     <a className='submit' href='/'>Go home</a>
                     <a className='submit' href='/historial'>Ver historial de compra</a>
+                    <a className='submit' href='/recommendations'>Ver mis recomendaciones</a>
                 </div>
+
             )}
             {!isAuthenticated && (
                 <div className="list">

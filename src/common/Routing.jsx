@@ -9,6 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import NavBar from '../navbar/NavBar';
 import HistorialCompra from '../flights/HistorialCompra'
 import TransactionHandler from '../flights/TransactionHandler'
+import Recomendations from '../flights/listingRecommendations';
+import HeartbeatStatus from '../flights/Workerhealth';
 
 
 
@@ -27,6 +29,8 @@ function Routing() {
         <Route path={"/flight/:id"} element={<FlightDetails />}/>
         <Route path={"/historial"} element={<HistorialCompra/>} />
         <Route path={"/transaction"} element={<TransactionHandler/>} />
+        <Route path={"/recommendations"} element={<Recomendations/>} />
+        <Route path={"/health"} element={<HeartbeatStatus/>} />
       </Routes>
     </BrowserRouter>
   );

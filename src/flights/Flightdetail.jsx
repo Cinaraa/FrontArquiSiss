@@ -21,8 +21,8 @@ export default function FlightDetails() {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/flights/${flightId}`, {
-          });
+          const response = await axios.get(`http://localhost:3000/flights/${flightId}`);
+
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -65,7 +65,6 @@ const handleBuyNow = async () => {
   try {
       if (!isLoading && isAuthenticated) {
           const token = await getAccessTokenSilently();
-          console.log(token)
           const response = await axios.post(
             `http://localhost:3000/buy`,
             {
@@ -80,6 +79,7 @@ const handleBuyNow = async () => {
                 }
             }
         );
+
           console.log('Purchase successful:', response);
           const form = document.createElement('form');
           form.method = 'POST';
@@ -99,7 +99,6 @@ const handleBuyNow = async () => {
       console.error('Error purchasing flight:', error);
   }
 };
-
 
   if (!flight) {
     return <div>Loading...</div>;
