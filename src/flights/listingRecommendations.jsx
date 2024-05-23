@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Flightcard from './Flightcard';
+import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Recommendations = () => {
@@ -19,7 +21,12 @@ const Recommendations = () => {
               'Content-Type': 'application/json'
             }
           });
-          setRecommendations(response.data);
+          console.log(response.data);
+          if (response.data && response.data.length > 0 && response.data[0].recommendations) {
+            setRecommendations(response.data[0].recommendations.top_3_recommendations);
+          } else {
+            setRecommendations([]);
+          }
         } catch (error) {
           setError('Error fetching recommendations');
           console.error('Error fetching recommendations:', error);
@@ -32,47 +39,30 @@ const Recommendations = () => {
     }
   }, [isLoading, isAuthenticated, user, getAccessTokenSilently]);
 
-  if (!isAuthenticated) {
-    return <div>Please log in to see your recommendations.</div>;
-  }
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
+  if (!isAuthenticated) {
+    return (
+      <div className="list">
+        <h1>Please log in to see your recommendations.</h1>
+        <a className='submit' href='/'>Go home</a>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="list">
       <h2>Your Recommendations</h2>
-      {recommendations.length === 0 ? (
-        <p>No recommendations found</p>
-      ) : (
-        <ul>
-          {recommendations.map((recommendation) => (
-            <li key={recommendation.id}>
-              <p><strong>Created At:</strong> {new Date(recommendation.createdAt).toLocaleString()}</p>
-              <p><strong>User IP:</strong> {recommendation.user_ip}</p>
-              <div>
-                <h3>Recommendation Details:</h3>
-                <ul>
-                  {Object.values(recommendation.recommendations).map((rec, index) => (
-                    <li key={rec.id}>
-                      <h4>Recommendation {index + 1}</h4>
-                      <p><strong>Departure Airport:</strong> {rec.departure_airport_name} ({rec.departure_airport_id})</p>
-                      <p><strong>Departure Time:</strong> {new Date(rec.departure_airport_time).toLocaleString()}</p>
-                      <p><strong>Arrival Airport:</strong> {rec.arrival_airport_name} ({rec.arrival_airport_id})</p>
-                      <p><strong>Arrival Time:</strong> {new Date(rec.arrival_airport_time).toLocaleString()}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      {error && <div>{error}</div>}
+      {!error && recommendations.length === 0 && <p>No recommendations found</p>}
+      <div className="list-flight">
+        {Array.isArray(recommendations) && recommendations.map((rec) => (
+          <Flightcard key={rec.id} flightCard={rec} />
+        ))}
+      </div>
+      <a className='submit' href='/'>Go home</a>
     </div>
   );
 };
