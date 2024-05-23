@@ -11,8 +11,9 @@ export default function Listingflights() {
     const [selectedDepartureAirport, setSelectedDepartureAirport] = useState('');
     const [selectedArrivalAirport, setSelectedArrivalAirport] = useState('');
     const [departureAirportTime, setDepartureAirportTime] = useState('');
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { isAuthenticated } = useAuth0();
     
+
     useEffect(() => {
         const fetchFlights = async () => {
             try {
@@ -31,9 +32,9 @@ export default function Listingflights() {
                 console.error(error);
             }
         };
-    
+
         fetchFlights();
-      }, [getAccessTokenSilently]);
+    }, []);
 
     const handleSearch = async () => {
       if (isAuthenticated){
@@ -48,9 +49,9 @@ export default function Listingflights() {
               if (departureAirportTime) {
                   params.departure_airport_time = departureAirportTime;
               }
-
+  
               const response = await axios.get('http://localhost:3000/flights', {
-                  params: params,
+                  params: params
               });
               //console.log(response.data.flights);
   
