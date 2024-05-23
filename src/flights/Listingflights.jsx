@@ -17,8 +17,8 @@ export default function Listingflights() {
     useEffect(() => {
         const fetchFlights = async () => {
             try {
-                const response = await axios.get('https://api.panchomro.me/flights');
-                console.log(response.data.flights);
+                const response = await axios.get('http://localhost:3000/flights');
+                //console.log(response.data.flights);
                 setFlightCards(response.data.flights); // Acceder a la clave 'flights'
 
                 // Obtener aeropuertos de salida únicos
@@ -50,10 +50,10 @@ export default function Listingflights() {
                   params.departure_airport_time = departureAirportTime;
               }
   
-              const response = await axios.get('https://api.panchomro.me/flights', {
+              const response = await axios.get('http://localhost:3000/flights', {
                   params: params
               });
-              console.log(response.data.flights);
+              //console.log(response.data.flights);
   
               setFlightCards(response.data.flights);
           } catch (error) {
@@ -74,7 +74,9 @@ export default function Listingflights() {
                     </div>
                     <a className='submit' href='/'>Go home</a>
                     <a className='submit' href='/historial'>Ver historial de compra</a>
+                    <a className='submit' href='/recommendations'>Ver mis recomendaciones</a>
                 </div>
+
             )}
             {!isAuthenticated && (
                 <div className="list">
