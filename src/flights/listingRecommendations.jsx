@@ -9,6 +9,7 @@ const Recommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [creationdate, setCreationDate] = useState('');
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
@@ -24,6 +25,7 @@ const Recommendations = () => {
           console.log(response.data);
           if (response.data && response.data.length > 0 && response.data[0].recommendations) {
             setRecommendations(response.data[0].recommendations.top_3_recommendations);
+            setCreationDate(response.data[0].createdAt);
           } else {
             setRecommendations([]);
           }
@@ -55,6 +57,7 @@ const Recommendations = () => {
   return (
     <div className="list">
       <h2>Your Recommendations</h2>
+      <p>Recommendations created on: {creationdate}</p>
       {error && <div>{error}</div>}
       {!error && recommendations.length === 0 && <p>No recommendations found</p>}
       <div className="list-flight">
