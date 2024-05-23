@@ -6,7 +6,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
-
     const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
     useEffect(() => {
         if (!isLoading && isAuthenticated) {
@@ -25,7 +24,6 @@ export default function Listingflights() {
                     });
                     console.log(response.data);
                     setFlightCards(response.data);
-
                 } catch (error) {
                     console.error(error);
                 }
@@ -33,9 +31,8 @@ export default function Listingflights() {
 
             fetchFlights();
         }
-    }, [isLoading, isAuthenticated, getAccessTokenSilently]);
-      
-    return (
+    }, [isLoading, isAuthenticated, user]);
+      return (
         <div>
           {isAuthenticated && (
             <div className="list">
