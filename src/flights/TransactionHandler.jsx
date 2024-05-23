@@ -21,7 +21,7 @@ export default function TransactionHandler() {
                     if (!isLoading) {
                         const token = await getAccessTokenSilently();
                         const response = await axios.post(
-                            'http://localhost:3000/confirm-transaction',
+                            'https://panchomro.me/confirm-transaction',
                             {
                                 token_ws: token_ws
                             },

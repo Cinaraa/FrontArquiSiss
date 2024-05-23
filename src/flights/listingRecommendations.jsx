@@ -16,7 +16,7 @@ const Recommendations = () => {
       const fetchRecommendations = async () => {
         try {
           const token = await getAccessTokenSilently();
-          const response = await axios.get('http://localhost:3000/recommendations', {
+          const response = await axios.get('https://panchomro.me/recommendations', {
             headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json'

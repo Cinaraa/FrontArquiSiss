@@ -9,7 +9,7 @@ const HeartbeatStatus = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/heartbeat-status'); // Ajusta el puerto según tu configuración
+        const response = await axios.get('https://panchomro.me/heartbeat-status'); // Ajusta el puerto según tu configuración
         setStatus(response.data.status);
       } catch (error) {
         setError('Error Workers are taking a break');

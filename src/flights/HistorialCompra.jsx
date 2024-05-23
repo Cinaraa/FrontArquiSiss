@@ -15,7 +15,7 @@ export default function Listingflights() {
             const fetchFlights = async () => {
                 try {
                     const token = await getAccessTokenSilently();
-                    const response = await axios.get(`http://localhost:3000/historial`,{
+                    const response = await axios.get(`https://panchomro.me/historial`,{
                         
                             headers: {
                                 Authorization: `Bearer ${token}`,
