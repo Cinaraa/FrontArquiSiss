@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LoginButton from '../profile/LoginButton';
 import LogoutButton from '../profile/LogoutButton';
-import './NavBar.css'; 
+import './NavBar.css';
 
-const NavBar = ({ isLoggedIn, logout }) => {
+const NavBar = ({ isLoggedIn, logout, userRoles }) => {
+  const isAdmin = userRoles?.includes('Admin');
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -12,6 +14,11 @@ const NavBar = ({ isLoggedIn, logout }) => {
           <li>
             <Link to="/listingflights">Flights</Link>
           </li>
+          {isAdmin && (
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-right">
@@ -26,7 +33,7 @@ const NavBar = ({ isLoggedIn, logout }) => {
                 <Link to="/perfil">Mi perfil</Link>
               </li>
               <li>
-                {/* <LogoutButton logout={logout} /> */}
+                <LogoutButton logout={logout} />
               </li>
             </>
           )}
@@ -37,9 +44,4 @@ const NavBar = ({ isLoggedIn, logout }) => {
 };
 
 export default NavBar;
-
-
-
-
-
 

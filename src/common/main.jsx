@@ -12,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       domain="dev-8v3xbi0ihbyftsnr.us.auth0.com"
       clientId="5bLCwk5Hdl24LBMAhhdv3dYQJuEb5ZIA"
       authorizationParams={{
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: 'https://flights_api.auth', // El Identifier de tu API en Auth0
+        scope: 'openid profile email'
       }}
       cacheLocation="localstorage"
     >
