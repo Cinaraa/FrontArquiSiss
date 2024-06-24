@@ -4,9 +4,8 @@ import LoginButton from '../profile/LoginButton';
 import LogoutButton from '../profile/LogoutButton';
 import './NavBar.css';
 
-const NavBar = ({ isLoggedIn, logout, userRoles }) => {
-  const hasUpdatePermission = userRoles?.includes('update:reserved');
-  console.log('¿Tiene el permiso "update:reserved"?', hasUpdatePermission);
+const NavBar = ({ isLoggedIn, logout, userPermissions = [] }) => {
+  const hasUpdatePermission = userPermissions.includes('update:reserved');
 
   return (
     <nav className="navbar">
@@ -45,5 +44,7 @@ const NavBar = ({ isLoggedIn, logout, userRoles }) => {
 };
 
 export default NavBar;
+
+
 
 
