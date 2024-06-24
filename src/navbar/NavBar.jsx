@@ -5,7 +5,8 @@ import LogoutButton from '../profile/LogoutButton';
 import './NavBar.css';
 
 const NavBar = ({ isLoggedIn, logout, userRoles }) => {
-  const isAdmin = userRoles?.includes('Admin');
+  const hasUpdatePermission = userRoles?.includes('update:reserved');
+  console.log('¿Tiene el permiso "update:reserved"?', hasUpdatePermission);
 
   return (
     <nav className="navbar">
@@ -14,7 +15,7 @@ const NavBar = ({ isLoggedIn, logout, userRoles }) => {
           <li>
             <Link to="/listingflights">Flights</Link>
           </li>
-          {isAdmin && (
+          {hasUpdatePermission && (
             <li>
               <Link to="/admin">Admin</Link>
             </li>
@@ -44,4 +45,5 @@ const NavBar = ({ isLoggedIn, logout, userRoles }) => {
 };
 
 export default NavBar;
+
 
