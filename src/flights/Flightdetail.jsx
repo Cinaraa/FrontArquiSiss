@@ -15,13 +15,14 @@ export default function FlightDetails() {
   const [ip, setIP] = useState("");
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState("");
+  const [reserved, setReserved] = useState(false);
 
 
   useEffect(() => {
     if (isAuthenticated) {
       const fetchFlightDetails = async () => {
         try {
-          const response = await axios.get(`api.panchomro.me/flights/${flightId}`);
+          const response = await axios.get(`http://localhost:3000/flights/${flightId}`);
           setFlight(response.data);
         } catch (error) {
           console.error('Error fetching flight details:', error);
@@ -64,7 +65,7 @@ export default function FlightDetails() {
       try {
         if (!isLoading && isAuthenticated) {
           const userId = user.sub;
-          const response = await axios.post(`https://api.panchomro.me/buy`, {
+          const response = await axios.post(`http://localhost:3000/buy`, {
             flightId: flightId,
             userId: userId,
             quantity: quantity, // Incluye la cantidad seleccionada en el cuerpo de la solicitud POST
@@ -93,6 +94,7 @@ export default function FlightDetails() {
       <p>Carbon Emissions: {flight.carbon_emissions} kg</p>
       <p>Price: {flight.price} {flight.currency}</p>
       <p>Pasajes disponibles: {flight.quantity}</p>
+      <p>Pasajes reservados: {flight.reserved}</p>
       <img src={flight.airline_logo} alt="airline logo" />
 
       <label htmlFor="quantity">Cantidad de Pasajes:</label>

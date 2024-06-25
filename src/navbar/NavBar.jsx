@@ -33,7 +33,7 @@ const NavBar = ({ isLoggedIn, logout, userPermissions = [] }) => {
                 <Link to="/perfil">Mi perfil</Link>
               </li>
               <li>
-                <LogoutButton logout={logout} />
+                {/* <LogoutButton logout={logout} /> */}
               </li>
             </>
           )}
