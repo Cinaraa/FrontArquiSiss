@@ -1,4 +1,31 @@
-# Logs
+# Ignore all .terraform directories
+**/.terraform/*
+
+# Ignore .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore crash log files
+crash.log
+crash.*.log
+
+# Ignore .tfvars and .tfvars.json files
+*.tfvars
+*.tfvars.json
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+*.tfplan
+*.lock.hcl
+
+# Ignore logs
 logs
 *.log
 npm-debug.log*
@@ -6,13 +33,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.env
 
+# Ignore node_modules and distribution directories
 node_modules
 dist
 dist-ssr
 *.local
-.env
-# Editor directories and files
+
+# Ignore editor-specific files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -22,3 +51,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Add exclusion for Git LFS tracked files
+!.gitattributes
+
+# Ignore provider binaries except those specifically tracked by Git LFS
+.terraform/providers/registry.terraform.io/*/*
+
