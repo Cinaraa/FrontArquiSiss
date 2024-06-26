@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { jwtDecode } from 'jwt-decode';
 import NavBar from '../navbar/NavBar';
-
+import Listingflights from '../flights/Listingflights';
+import Admin from '../admin/Admin'; // Importar el componente Admin
 import './App.css';
 import LoginButton from '../profile/LoginButton';
 import LogoutButton from '../profile/LogoutButton';
 import avioncita from '../assets/background.jpg';
-import Listingflights from '../flights/Listingflights'; // Importar Listingflights
 
 function App() {
   const { isAuthenticated, logout, user, getAccessTokenSilently } = useAuth0();
@@ -21,10 +21,9 @@ function App() {
         const token = await getAccessTokenSilently();
 
         const decodedToken = jwtDecode(token);
-        const roles = decodedToken['https://panchomro.me/roles'] || [];
         const permissions = decodedToken.permissions || [];
 
-        setUserRoles(roles);
+        setUserRoles(decodedToken['https://panchomro.me/roles'] || []);
         setUserPermissions(permissions);
       } catch (error) {
         console.error('Error fetching token and decoding:', error);
@@ -52,15 +51,11 @@ function App() {
         Flights
       </a>
       <NavBar isLoggedIn={isAuthenticated} userRoles={userRoles} userPermissions={userPermissions} />
-
-      {/* Renderizar Listingflights solo si el usuario está en la ruta /listingflights */}
-      {window.location.pathname === '/listingflights' && (
-        <Listingflights userPermissions={userPermissions} />
-      )}
+      {/* Configurar la ruta /admin */}
+      {window.location.pathname === '/admin' && <Admin />}
+      <Listingflights userPermissions={userPermissions} />
     </div>
   );
 }
 
 export default App;
-
-

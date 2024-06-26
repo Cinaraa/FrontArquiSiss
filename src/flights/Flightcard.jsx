@@ -1,11 +1,14 @@
 import './Flightcard.css';
 import { Link } from 'react-router-dom';
 
-export default function Flightcard({ flightCard }) { // Cambia flightcard a flightCard
+export default function Flightcard({ flightCard, userPermissions = [] }) {
   const departure_day = flightCard.departure_airport_time.split('T')[0];
   const departure_time = flightCard.departure_airport_time.split('T')[1].split('.')[0];
   const arrival_day = flightCard.arrival_airport_time.split('T')[0];
   const arrival_time = flightCard.arrival_airport_time.split('T')[1].split('.')[0];
+
+  const isAdmin = userPermissions.includes('update:reserved');
+  console.log('userPermissions de flightcard:', userPermissions);
 
   return (
     <div className='flightcard'>
@@ -31,7 +34,7 @@ export default function Flightcard({ flightCard }) { // Cambia flightcard a flig
       <div className='bottom-part-card'>
         <div className='reserved-info'>
           <p>Pasajes reservados: {flightCard.reserved}</p>
-          <button className='buy-reserved-button'>Buy Reserved</button>
+          {!isAdmin && <button className='buy-reserved-button'>Buy Reserved</button>}
         </div>
         <Link to={`/flight/${flightCard.id}`}>Ver más</Link>
       </div>
@@ -39,4 +42,3 @@ export default function Flightcard({ flightCard }) { // Cambia flightcard a flig
   );
 }
 
-  

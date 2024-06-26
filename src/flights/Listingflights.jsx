@@ -3,6 +3,7 @@ import axios from 'axios';
 import Flightcard from './Flightcard';
 import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { jwtDecode } from 'jwt-decode'; // Asegúrate de importar correctamente el método jwtDecode
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
@@ -11,21 +12,36 @@ export default function Listingflights() {
     const [selectedDepartureAirport, setSelectedDepartureAirport] = useState('');
     const [selectedArrivalAirport, setSelectedArrivalAirport] = useState('');
     const [departureAirportTime, setDepartureAirportTime] = useState('');
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const [userPermissions, setUserPermissions] = useState([]);
     
+    // Obtener el token y decodificar los permisos
+    useEffect(() => {
+        const fetchUserPermissions = async () => {
+            try {
+                const token = await getAccessTokenSilently();
+                const decodedToken = jwtDecode(token);
+                const permissions = decodedToken.permissions || [];
+                setUserPermissions(permissions);
+            } catch (error) {
+                console.error('Error fetching token and decoding:', error);
+            }
+        };
+
+        if (isAuthenticated) {
+            fetchUserPermissions();
+        }
+    }, [isAuthenticated, getAccessTokenSilently]);
 
     useEffect(() => {
         const fetchFlights = async () => {
             try {
                 const response = await axios.get('http://localhost:3000/flights');
-                console.log(response.data.flights);
-                setFlightCards(response.data.flights); // Acceder a la clave 'flights'
+                setFlightCards(response.data.flights);
 
-                // Obtener aeropuertos de salida únicos
                 const uniqueDepartureAirports = Array.from(new Set(response.data.flights.map(flight => flight.departure_airport_id)));
                 setDepartureAirports(uniqueDepartureAirports);
 
-                // Obtener aeropuertos de llegada únicos
                 const uniqueArrivalAirports = Array.from(new Set(response.data.flights.map(flight => flight.arrival_airport_id)));
                 setArrivalAirports(uniqueArrivalAirports);
             } catch (error) {
@@ -37,31 +53,29 @@ export default function Listingflights() {
     }, []);
 
     const handleSearch = async () => {
-      if (isAuthenticated){
-          try {
-              const params = {};
-              if (selectedDepartureAirport) {
-                  params.departure_airport_id = selectedDepartureAirport;
-              }
-              if (selectedArrivalAirport) {
-                  params.arrival_airport_id = selectedArrivalAirport;
-              }
-              if (departureAirportTime) {
-                  params.departure_airport_time = departureAirportTime;
-              }
-  
-              const response = await axios.get('http://localhost:3000/flights', {
-                  params: params
-              });
-              console.log(response.data.flights);
-  
-              setFlightCards(response.data.flights);
-          } catch (error) {
-              console.error(error);
-          }
-      }
-  };
-  
+        if (isAuthenticated){
+            try {
+                const params = {};
+                if (selectedDepartureAirport) {
+                    params.departure_airport_id = selectedDepartureAirport;
+                }
+                if (selectedArrivalAirport) {
+                    params.arrival_airport_id = selectedArrivalAirport;
+                }
+                if (departureAirportTime) {
+                    params.departure_airport_time = departureAirportTime;
+                }
+
+                const response = await axios.get('http://localhost:3000/flights', {
+                    params: params
+                });
+
+                setFlightCards(response.data.flights);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     return (
         <div>
@@ -69,7 +83,7 @@ export default function Listingflights() {
                 <div className="list">
                     <div className="list-flight">
                         {Array.isArray(flightCards) && flightCards.map(flightCard => (
-                            <Flightcard key={flightCard.id} flightCard={flightCard} />
+                            <Flightcard key={flightCard.id} flightCard={flightCard} userPermissions={userPermissions} />
                         ))}
                     </div>
                     <a className='submit' href='/'>Go home</a>
@@ -101,7 +115,7 @@ export default function Listingflights() {
 
                 <label htmlFor="departureAirportTime">Departure Airport Time:</label>
                 <input
-                    type="datetime-local" // Usa datetime-local para seleccionar la fecha y hora
+                    type="datetime-local"
                     id="departureAirportTime"
                     value={departureAirportTime}
                     onChange={(e) => setDepartureAirportTime(e.target.value)}
@@ -111,4 +125,7 @@ export default function Listingflights() {
             </div>
         </div>
     );
-};
+}
+
+
+
