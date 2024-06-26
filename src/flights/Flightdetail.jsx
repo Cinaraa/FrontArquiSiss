@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Flightdetail.css';
 import LoginButton from '../profile/LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
+import { jwtDecode } from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
 
@@ -15,6 +16,8 @@ export default function FlightDetails() {
   const [ip, setIP] = useState("");
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState("");
+  const [userPermissions, setUserPermissions] = useState([]);
+  const [hasUpdatePermission, setHasUpdatePermission] = useState(false);
 
 
   useEffect(() => {
@@ -31,7 +34,29 @@ export default function FlightDetails() {
 
       fetchFlightDetails();
     }
-  }, [flightId, getAccessTokenSilently]);
+  }, [flightId, isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
+    const fetchUserPermissions = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+
+        const decodedToken = jwtDecode(token);
+        const permissions = decodedToken.permissions || [];
+
+        setUserPermissions(permissions);
+
+        const hasUpdatePerm = permissions.includes('update:reserved');
+        setHasUpdatePermission(hasUpdatePerm);
+      } catch (error) {
+        console.error('Error fetching token and decoding:', error);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchUserPermissions();
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
 
   useEffect(() => {
@@ -70,7 +95,8 @@ const handleBuyNow = async () => {
             {
                 flightId: flightId,
                 quantity: quantity,
-                ip: ip
+                ip: ip,
+                isAdmin: hasUpdatePermission
             },
             {
                 headers: {
@@ -99,6 +125,47 @@ const handleBuyNow = async () => {
       console.error('Error purchasing flight:', error);
   }
 };
+const handleBuyReserved = async () => {
+  try {
+    if (!isLoading && isAuthenticated) {
+      const token = await getAccessTokenSilently();
+      const response = await axios.post(
+        `http://localhost:3000/buyReserved`,
+        {
+          flightId: flightId,
+          quantity: quantity,
+          ip: ip,
+          isAdmin: hasUpdatePermission
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      console.log('Purchase successful:', response);
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = response.data.url;
+
+      const tokenInput = document.createElement('input');
+      tokenInput.type = 'hidden';
+      tokenInput.name = 'token_ws';
+      tokenInput.value = response.data.token;
+      form.appendChild(tokenInput);
+
+      document.body.appendChild(form);
+      form.submit();
+
+      // Aquí puedes manejar la respuesta como lo necesites
+    }
+  } catch (error) {
+    console.error('Error purchasing reserved flight:', error);
+  }
+};
+
+
 
   if (!flight) {
     return <div>Loading...</div>;
@@ -132,6 +199,12 @@ const handleBuyNow = async () => {
 
       {isAuthenticated && (
         <button onClick={handleBuyNow}>Buy Now</button>
+      )}
+      {!hasUpdatePermission && (
+        <button onClick={handleBuyReserved}>Buy Reserved</button>
+      )}
+      {!isAuthenticated && (
+        <LoginButton className="login-button" />
       )}
       {!isAuthenticated && (
         <LoginButton className="login-button" />

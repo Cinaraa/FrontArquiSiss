@@ -35,10 +35,9 @@ export default function Flightcard({ flightCard, userPermissions = []  }) { // C
         </div>
       </div>
       <div className='bottom-part-card'>
-        <div className='reserved-info'>
-          <p>Pasajes reservados: {flightCard.reserved}</p>
+        {/* <div className='reserved-info'>
           {!isAdmin && <button className='buy-reserved-button'>Buy Reserved</button>}
-        </div>
+        </div> */}
         <Link to={`/flight/${flightCard.id}`}>Ver más</Link>
       </div>
     </div>
