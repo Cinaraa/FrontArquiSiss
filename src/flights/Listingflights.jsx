@@ -3,6 +3,7 @@ import axios from 'axios';
 import Flightcard from './Flightcard';
 import './Listingflights.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { jwtDecode } from 'jwt-decode'; 
 
 export default function Listingflights() {
     const [flightCards, setFlightCards] = useState([]);
@@ -12,11 +13,30 @@ export default function Listingflights() {
     const [selectedArrivalAirport, setSelectedArrivalAirport] = useState('');
     const [departureAirportTime, setDepartureAirportTime] = useState('');
     const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const [userPermissions, setUserPermissions] = useState([]);
+
+    useEffect(() => {
+        const fetchUserPermissions = async () => {
+            try {
+                const token = await getAccessTokenSilently();
+                const decodedToken = jwtDecode(token);
+                const permissions = decodedToken.permissions || [];
+                setUserPermissions(permissions);
+            } catch (error) {
+                console.error('Error fetching token and decoding:', error);
+            }
+        };
+
+        if (isAuthenticated) {
+            fetchUserPermissions();
+        }
+    }, [isAuthenticated, getAccessTokenSilently]);
+    
     
     useEffect(() => {
         const fetchFlights = async () => {
             try {
-                const response = await axios.get('https://panchomro.me/flights');
+                const response = await axios.get('http://localhost:3000/flights');
                 //console.log(response.data.flights);
                 setFlightCards(response.data.flights); // Acceder a la clave 'flights'
 
@@ -49,7 +69,7 @@ export default function Listingflights() {
                   params.departure_airport_time = departureAirportTime;
               }
 
-              const response = await axios.get('https://panchomro.me/flights', {
+              const response = await axios.get('http://localhost:3000/flights', {
                   params: params,
               });
               //console.log(response.data.flights);
@@ -68,7 +88,7 @@ export default function Listingflights() {
                 <div className="list">
                     <div className="list-flight">
                         {Array.isArray(flightCards) && flightCards.map(flightCard => (
-                            <Flightcard key={flightCard.id} flightCard={flightCard} />
+                            <Flightcard key={flightCard.id} flightCard={flightCard} userPermissions={userPermissions} />
                         ))}
                     </div>
                     <a className='submit' href='/'>Go home</a>
