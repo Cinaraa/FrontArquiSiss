@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function ReservedFlightCard({ flight, onChangeAvailability }) {
-  const departure_day = flight.departure_airport_time ? flight.departure_airport_time.split('T')[0] : 'N/A';
-  const departure_time = flight.departure_airport_time ? flight.departure_airport_time.split('T')[1].split('.')[0] : 'N/A';
-  const arrival_day = flight.arrival_airport_time ? flight.arrival_airport_time.split('T')[0] : 'N/A';
-  const arrival_time = flight.arrival_airport_time ? flight.arrival_airport_time.split('T')[1].split('.')[0] : 'N/A';
+  const departure_day = flight.departure_time ? flight.departure_time.split('T')[0] : 'N/A';
+  const departure_airport = flight.departure_airport ? flight.departure_airport : 'N/A';
+  const arrival_airport = flight.arrival_airport ? flight.arrival_airport : 'N/A';
+  const quantity = flight.quantity ? flight.quantity : 'N/A';
   const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 
   const handleChangeAvailability = async () => {
@@ -23,6 +23,7 @@ export default function ReservedFlightCard({ flight, onChangeAvailability }) {
         }
       });
       onChangeAvailability(flight.id);
+      console.log('Availability changed successfully');
     } catch (error) {
       console.error('Error changing availability:', error);
     }
@@ -36,17 +37,15 @@ export default function ReservedFlightCard({ flight, onChangeAvailability }) {
           <p>{flight.airline}</p>
         </div>
         <div className='center-left-side-card'>
-          <p>{flight.departure_airport_id}</p>
+          <p>Departure airport: {departure_airport}</p>
           <p>Departure day: {departure_day}</p>
-          <p>Departure time: {departure_time}</p>
         </div>
         <div className='center-right-side-card'>
-          <p>Flight duration: {flight.duration} mins</p>
+            <p>Arrival airport: {arrival_airport}</p>
+          <p>Quantity: {quantity}</p>
         </div>
-        <div className='right-side-card'>
-          <p>{flight.arrival_airport_id}</p>
-          <p>Arrival day: {arrival_day}</p>
-          <p>Arrival time: {arrival_time}</p>
+        <div className='top-side-card'>
+          {/* <p>Arrival airport: {arrival_airport}</p> */}
         </div>
       </div>
       <div className='bottom-part-card'>
