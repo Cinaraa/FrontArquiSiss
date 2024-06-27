@@ -11,6 +11,10 @@ import HistorialCompra from '../flights/HistorialCompra'
 import TransactionHandler from '../flights/TransactionHandler'
 import Recomendations from '../flights/listingRecommendations';
 import HeartbeatStatus from '../flights/Workerhealth';
+import Admin from '../flights/Admin';
+import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que la ruta sea correcta
+// import ViewExchanges from '../flights/ViewExchanges'; // Crea este componente si aún no existe
+
 
 
 
@@ -31,6 +35,9 @@ function Routing() {
         <Route path={"/transaction"} element={<TransactionHandler/>} />
         <Route path={"/recommendations"} element={<Recomendations/>} />
         <Route path={"/health"} element={<HeartbeatStatus/>} />
+        <Route path={"/admin"} element={<Admin/>} />
+        <Route path={"/admin/reserved-flights"} element={<ReservedFlights/>} />
+        {/* <Route path={"/admin/view-exchanges"} element={<ViewExchanges/>} /> */}
       </Routes>
     </BrowserRouter>
   );

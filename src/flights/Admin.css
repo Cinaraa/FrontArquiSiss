@@ -1,0 +1,16 @@
+.admin-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .admin-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .admin-container button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

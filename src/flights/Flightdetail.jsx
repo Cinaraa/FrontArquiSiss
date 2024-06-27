@@ -200,9 +200,6 @@ const handleBuyReserved = async () => {
       {isAuthenticated && (
         <button onClick={handleBuyNow}>Buy Now</button>
       )}
-      {!hasUpdatePermission && (
-        <button onClick={handleBuyReserved}>Buy Reserved</button>
-      )}
       {!isAuthenticated && (
         <LoginButton className="login-button" />
       )}

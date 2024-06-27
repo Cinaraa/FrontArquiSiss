@@ -1,0 +1,28 @@
+/* ReservedFlightCard.css */
+.reserved-flight-card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .reserved-flight-card .top-side.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .reserved-flight-card .bottom-part-card {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  
+  /* AdminReservedFlights.css */
+  .admin-reserved-flights-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
