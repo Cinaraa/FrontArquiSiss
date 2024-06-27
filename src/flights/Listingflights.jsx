@@ -11,14 +11,13 @@ export default function Listingflights() {
     const [selectedDepartureAirport, setSelectedDepartureAirport] = useState('');
     const [selectedArrivalAirport, setSelectedArrivalAirport] = useState('');
     const [departureAirportTime, setDepartureAirportTime] = useState('');
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
     
-
     useEffect(() => {
         const fetchFlights = async () => {
             try {
-                const response = await axios.get('https://api.panchomro.me/flights');
-                console.log(response.data.flights);
+                const response = await axios.get('https://panchomro.me/flights');
+                //console.log(response.data.flights);
                 setFlightCards(response.data.flights); // Acceder a la clave 'flights'
 
                 // Obtener aeropuertos de salida únicos
@@ -32,9 +31,9 @@ export default function Listingflights() {
                 console.error(error);
             }
         };
-
+    
         fetchFlights();
-    }, []);
+      }, [getAccessTokenSilently]);
 
     const handleSearch = async () => {
       if (isAuthenticated){
@@ -49,11 +48,11 @@ export default function Listingflights() {
               if (departureAirportTime) {
                   params.departure_airport_time = departureAirportTime;
               }
-  
-              const response = await axios.get('https://api.panchomro.me/flights', {
-                  params: params
+
+              const response = await axios.get('https://panchomro.me/flights', {
+                  params: params,
               });
-              console.log(response.data.flights);
+              //console.log(response.data.flights);
   
               setFlightCards(response.data.flights);
           } catch (error) {
@@ -74,7 +73,9 @@ export default function Listingflights() {
                     </div>
                     <a className='submit' href='/'>Go home</a>
                     <a className='submit' href='/historial'>Ver historial de compra</a>
+                    <a className='submit' href='/recommendations'>Ver mis recomendaciones</a>
                 </div>
+
             )}
             {!isAuthenticated && (
                 <div className="list">
