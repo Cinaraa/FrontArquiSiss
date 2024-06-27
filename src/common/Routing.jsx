@@ -13,6 +13,11 @@ import Recomendations from '../flights/listingRecommendations';
 import HeartbeatStatus from '../flights/Workerhealth';
 import Admin from '../flights/Admin';
 import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que la ruta sea correcta
+import ExchangeMenu from '../intercambios/ExchangeMenu'; // Asegúrate de que la ruta sea correcta
+import OutgoingOffers from '../intercambios/OutgoingOffers'
+import IncomingOffers from '../intercambios/IncomingOffers'
+import OutgoingProposals from '../intercambios/OutgoingProposals'
+import IncomingProposals from '../intercambios/IncomingProposals'
 // import ViewExchanges from '../flights/ViewExchanges'; // Crea este componente si aún no existe
 
 
@@ -37,6 +42,11 @@ function Routing() {
         <Route path={"/health"} element={<HeartbeatStatus/>} />
         <Route path={"/admin"} element={<Admin/>} />
         <Route path={"/admin/reserved-flights"} element={<ReservedFlights/>} />
+        <Route path={"/admin/view-exchanges"} element={<ExchangeMenu/>} />
+        <Route path={"/admin/outgoing-offers"} element={<OutgoingOffers/>} />
+        <Route path={"/admin/incoming-offers"} element={<IncomingOffers/>} />
+        <Route path={"/admin/outgoing-proposals"} element={<OutgoingProposals/>} />
+        <Route path={"/admin/incoming-proposals"} element={<IncomingProposals/>} />
         {/* <Route path={"/admin/view-exchanges"} element={<ViewExchanges/>} /> */}
       </Routes>
     </BrowserRouter>
