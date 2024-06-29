@@ -1,13 +1,13 @@
+// AdminReservedFlights.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ExistingOffersCard from './ExistingOffersCard';
-//import './ExistingOffersCard.css';
-
+import MakeProposalCard from './MakeProposalCard';
+// import './ReservedFlights.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { jwtDecode } from 'jwt-decode';
 
-export default function AdminexistingOffers() {
-  const [existingOffers, setExistingOffers] = useState([]);
+export default function AdminReservedFlights({ auction_id }) {
+  const [reservedFlights, setReservedFlights] = useState([]);
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [userPermissions, setUserPermissions] = useState([]);
 
@@ -29,33 +29,31 @@ export default function AdminexistingOffers() {
   }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
-    const fetchExistingIncomingOffers = async () => {
+    const fetchReservedFlights = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/offers/incoming-offers');
-        setExistingOffers(response.data);
+        const response = await axios.get('http://localhost:3000/admin/reserved-flights');
+        setReservedFlights(response.data);
       } catch (error) {
         console.error('Error fetching reserved flights:', error);
       }
     };
 
-    fetchExistingIncomingOffers();
+    fetchReservedFlights();
   }, []);
 
 
   return (
     <div>
       {isAuthenticated && (
-
-        <div className="admin-existing-offers-list">
-            <h1>Ofertas Entrantes</h1>
-          {Array.isArray(existingOffers) && existingOffers.map(offer => (
-            <ExistingOffersCard key={offer.id} offer={offer} />
+        <div className="admin-reserved-flights-list">
+          {Array.isArray(reservedFlights) && reservedFlights.map(flight => (
+            <MakeProposalCard key={flight.id} flight={flight.id} auction={auction_id} />
           ))}
         </div>
       )}
       {!isAuthenticated && (
-        <div className="admin-existing-offers-list">
-          <h1>Log in to see the existing offers</h1>
+        <div className="admin-reserved-flights-list">
+          <h1>Log in to see the reserved flights</h1>
         </div>
       )}
     </div>

@@ -19,8 +19,7 @@
     margin-top: 16px;
   }
   
-  /* AdminReservedFlights.css */
-  .admin-reserved-flights-list {
+  .admin-existing-offers-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

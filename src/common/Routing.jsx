@@ -16,6 +16,7 @@ import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que l
 import ExchangesMenu from '../flights/ViewExchanges'; // Crea este componente si aún no existe
 import ReservedFlightDetails from '../flights/ReservedFlightDetails'
 import ExistingOffers from '../flights/ExistingOffers'
+import MakeProposal from '../flights/MakeProposal'
 
 
 function Routing() {
@@ -40,6 +41,7 @@ function Routing() {
         <Route path={"/reserved-flight/:id"} element={<ReservedFlightDetails/>} />
         <Route path={"/admin/view-exchanges"} element={<ExchangesMenu/>} />
         <Route path={"/admin/view-existing-offers"} element={<ExistingOffers/>} />
+        <Route path={"/make-proposal/:auction_id"} element={<MakeProposal/>} />
       </Routes>
     </BrowserRouter>
   );
