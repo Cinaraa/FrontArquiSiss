@@ -18,6 +18,8 @@ import ReservedFlightDetails from '../flights/ReservedFlightDetails'
 import ExistingOffers from '../flights/ExistingOffers'
 import MakeProposal from '../flights/MakeProposal'
 import PublishFlightOffer from '../flights/PublishFlightOffer'
+import ReservedTransactionHandler from '../flights/ReservedTransactionHandler'
+
 
 
 function Routing() {
@@ -44,6 +46,8 @@ function Routing() {
         <Route path={"/admin/view-existing-offers"} element={<ExistingOffers/>} />
         <Route path={"/make-proposal/:auction_id"} element={<MakeProposal/>} />
         <Route path={"/admin/publish-offer"} element={<PublishFlightOffer/>} />
+        <Route path={"/transaction-reserved"} element={<ReservedTransactionHandler/>} />
+
       </Routes>
     </BrowserRouter>
   );
