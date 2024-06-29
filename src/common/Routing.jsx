@@ -16,7 +16,11 @@ import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que l
 import ExchangesMenu from '../flights/ViewExchanges'; // Crea este componente si aún no existe
 import ReservedFlightDetails from '../flights/ReservedFlightDetails'
 import ExistingOffers from '../flights/ExistingOffers'
+<<<<<<< HEAD
 import MakeProposal from '../flights/MakeProposal'
+=======
+import PublishFlightOffer from '../flights/PublishFlightOffer'
+>>>>>>> 7155684d9ced406b3d91dd79de0c3db1514fe1d8
 
 
 function Routing() {
