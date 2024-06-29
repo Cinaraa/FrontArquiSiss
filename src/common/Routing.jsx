@@ -13,8 +13,11 @@ import Recomendations from '../flights/listingRecommendations';
 import HeartbeatStatus from '../flights/Workerhealth';
 import Admin from '../flights/Admin';
 import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que la ruta sea correcta
-// import ViewExchanges from '../flights/ViewExchanges'; // Crea este componente si aún no existe
+import ExchangesMenu from '../flights/ViewExchanges'; // Crea este componente si aún no existe
 import ReservedFlightDetails from '../flights/ReservedFlightDetails'
+import ExistingOffers from '../flights/ExistingOffers'
+import MakeProposal from '../flights/MakeProposal'
+import PublishFlightOffer from '../flights/PublishFlightOffer'
 import ReservedTransactionHandler from '../flights/ReservedTransactionHandler'
 
 
@@ -39,9 +42,12 @@ function Routing() {
         <Route path={"/admin"} element={<Admin/>} />
         <Route path={"/admin/reserved-flights"} element={<ReservedFlights/>} />
         <Route path={"/reserved-flight/:id"} element={<ReservedFlightDetails/>} />
+        <Route path={"/admin/view-exchanges"} element={<ExchangesMenu/>} />
+        <Route path={"/admin/view-existing-offers"} element={<ExistingOffers/>} />
+        <Route path={"/make-proposal/:auction_id"} element={<MakeProposal/>} />
+        <Route path={"/admin/publish-offer"} element={<PublishFlightOffer/>} />
         <Route path={"/transaction-reserved"} element={<ReservedTransactionHandler/>} />
 
-        {/* <Route path={"/admin/view-exchanges"} element={<ViewExchanges/>} /> */}
       </Routes>
     </BrowserRouter>
   );
