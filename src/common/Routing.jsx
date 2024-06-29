@@ -15,6 +15,7 @@ import Admin from '../flights/Admin';
 import ReservedFlights from '../flights/ReservedFlights'; // Asegúrate de que la ruta sea correcta
 // import ViewExchanges from '../flights/ViewExchanges'; // Crea este componente si aún no existe
 import ReservedFlightDetails from '../flights/ReservedFlightDetails'
+import ReservedTransactionHandler from '../flights/ReservedTransactionHandler'
 
 
 
@@ -38,6 +39,7 @@ function Routing() {
         <Route path={"/admin"} element={<Admin/>} />
         <Route path={"/admin/reserved-flights"} element={<ReservedFlights/>} />
         <Route path={"/reserved-flight/:id"} element={<ReservedFlightDetails/>} />
+        <Route path={"/transaction-reserved"} element={<ReservedTransactionHandler/>} />
 
         {/* <Route path={"/admin/view-exchanges"} element={<ViewExchanges/>} /> */}
       </Routes>

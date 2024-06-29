@@ -92,7 +92,7 @@ export default function ReservedFlightDetails() {
       if (!isLoading && isAuthenticated) {
         const token = await getAccessTokenSilently();
         const response = await axios.post(
-          `http://localhost:3000/admin/buyReserved`,
+          `http://localhost:3000/buyReserved`,
           {
             flightId: id,
             quantity: quantity,
@@ -140,7 +140,7 @@ export default function ReservedFlightDetails() {
       <p>Arrival Time: {reservedFlight.arrival_airport_time}</p>
       <p>Duration: {reservedFlight.duration} min</p>
       <p>Carbon Emissions: {reservedFlight.carbon_emissions} kg</p>
-      <p>Price: {reservedFlight.price} {reservedFlight.currency}</p>
+      <p>Price: {Math.round(reservedFlight.price)} {reservedFlight.currency}</p> 
       <p>Pasajes disponibles: {reservedFlight.quantity}</p>
       <img src={reservedFlight.airline_logo} alt="airline logo" />
 
