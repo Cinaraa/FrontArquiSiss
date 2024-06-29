@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ReservedFlightCard.css';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function PublishFlightCard({ flight, onChangeAvailability }) {
+  const [selectedQuantity, setSelectedQuantity] = useState(1); // Estado para la cantidad seleccionada
   const departure_day = flight.departure_time ? flight.departure_time.split('T')[0] : 'N/A';
   const departure_airport = flight.departure_airport ? flight.departure_airport : 'N/A';
   const arrival_airport = flight.arrival_airport ? flight.arrival_airport : 'N/A';
@@ -19,7 +20,7 @@ export default function PublishFlightCard({ flight, onChangeAvailability }) {
         `http://localhost:3000/place-offer/${flight.id}`,
         {
           infoCompra_id: flight.id, // Verifica que `flight.flight_id` es el dato correcto
-          quantity: flight.quantity // O envía la cantidad necesaria si es otra
+          quantity: selectedQuantity // Envía la cantidad seleccionada
         },
         {
           headers: {
@@ -53,9 +54,18 @@ export default function PublishFlightCard({ flight, onChangeAvailability }) {
         </div>
       </div>
       <div className='bottom-part-card'>
+        <label htmlFor="quantity">Quantity:</label>
+        <select 
+          id="quantity" 
+          value={selectedQuantity} 
+          onChange={(e) => setSelectedQuantity(parseInt(e.target.value))}
+        >
+          {Array.from({ length: Math.min(flight.quantity, 5) }, (_, i) => i + 1).map(num => (
+            <option key={num} value={num}>{num}</option>
+          ))}
+        </select>
         <button onClick={handlePlaceOffer}>Publish offer</button>
       </div>
     </div>
   );
 }
-
