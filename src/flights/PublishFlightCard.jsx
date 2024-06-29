@@ -17,7 +17,7 @@ export default function PublishFlightCard({ flight, onChangeAvailability }) {
       console.log('Token JWT:', token);
 
       const response = await axios.post(
-        `http://localhost:3000/place-offer/${flight.id}`,
+        `https://panchomro.me/place-offer/${flight.id}`,
         {
           infoCompra_id: flight.id, // Verifica que `flight.flight_id` es el dato correcto
           quantity: selectedQuantity // Envía la cantidad seleccionada

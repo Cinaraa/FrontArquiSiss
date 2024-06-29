@@ -17,7 +17,7 @@ export default function ReservedFlightCard({ flight, onChangeAvailability }) {
         console.log('Token JWT:', token);
 
       
-      await axios.post(`http://localhost:3000/admin/reserved-flights/availability/${flight.flight_id}`, {}, {
+      await axios.post(`https://panchomro.me/admin/reserved-flights/availability/${flight.flight_id}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }

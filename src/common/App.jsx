@@ -24,7 +24,7 @@ function App() {
         const token = await getAccessTokenSilently();
 
         const decodedToken = jwtDecode(token);
-        const roles = decodedToken['http://localhost:3000/roles'] || [];
+        const roles = decodedToken['https://panchomro.me/roles'] || [];
         const permissions = decodedToken.permissions || [];
 
         setUserRoles(roles);

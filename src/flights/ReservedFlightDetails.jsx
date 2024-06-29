@@ -24,7 +24,7 @@ export default function ReservedFlightDetails() {
       const fetchReservedFlightDetails = async () => {
         try {
           const token = await getAccessTokenSilently();
-          const response = await axios.get(`http://localhost:3000/flights/reserved/${id}`,{
+          const response = await axios.get(`https://panchomro.me/flights/reserved/${id}`,{
                         
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@ export default function ReservedFlightDetails() {
       if (!isLoading && isAuthenticated) {
         const token = await getAccessTokenSilently();
         const response = await axios.post(
-          `http://localhost:3000/buyReserved`,
+          `https://panchomro.me/buyReserved`,
           {
             flightId: id,
             quantity: quantity,

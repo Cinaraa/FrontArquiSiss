@@ -16,7 +16,7 @@ export default function MakeProposalCard({ flight, auction_id }) {
       console.log('Token JWT:', token);
 
       const response = await axios.post(
-        `http://localhost:3000/sendOffer`,
+        `https://panchomro.me/sendOffer`,
         {
           auction_id: auction_id, // Verifica que `flight.auction_id` es el dato correcto
           intercambio_id: flight.id, // Verifica que `flight.flight_id` es el dato correcto

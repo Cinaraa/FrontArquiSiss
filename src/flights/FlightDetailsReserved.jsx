@@ -21,7 +21,7 @@ export default function FlightDetailsReserved() {
   useEffect(() => {
     const fetchFlightDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/availableReservedFlights/${flightId}`);
+        const response = await axios.get(`https://panchomro.me/availableReservedFlights/${flightId}`);
         setFlight(response.data);
       } catch (error) {
         console.error('Error fetching reserved flight details:', error);
@@ -78,7 +78,7 @@ export default function FlightDetailsReserved() {
       if (!isLoading && isAuthenticated) {
         const token = await getAccessTokenSilently();
         const response = await axios.post(
-          `http://localhost:3000/buyReserved`,
+          `https://panchomro.me/buyReserved`,
           {
             flightId: flightId,
             quantity: quantity,

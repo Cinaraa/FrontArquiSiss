@@ -31,7 +31,7 @@ export default function AdminReservedFlights({ auction_id }) {
   useEffect(() => {
     const fetchReservedFlights = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/admin/reserved-flights');
+        const response = await axios.get('https://panchomro.me/admin/reserved-flights');
         setReservedFlights(response.data);
       } catch (error) {
         console.error('Error fetching reserved flights:', error);

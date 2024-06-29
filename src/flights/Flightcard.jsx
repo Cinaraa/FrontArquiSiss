@@ -9,7 +9,7 @@ export default function Flightcard({ flightCard, userPermissions = [] }) {
   useEffect(() => {
     const checkAvailability = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/flights/check-availability/${flightCard.id}`);
+        const response = await axios.get(`https://panchomro.me/flights/check-availability/${flightCard.id}`);
         if (response.data.available) {
           setIsAvailable(true);
         }

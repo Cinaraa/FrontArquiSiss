@@ -31,7 +31,7 @@ export default function AdminexistingOffers() {
   useEffect(() => {
     const fetchExistingIncomingOffers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/offers/incoming-offers');
+        const response = await axios.get('https://panchomro.me/offers/incoming-offers');
         setExistingOffers(response.data);
       } catch (error) {
         console.error('Error fetching reserved flights:', error);
